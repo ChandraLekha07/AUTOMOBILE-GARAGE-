@@ -2,13 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     {% block title %}
     <title>Automobile Garage</title>
-    {% endblock %}
+    {% endblock title %}
 </head>
 <body>
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">AMS</a>
+        <form class="d-flex" style="margin-left:20px;">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-light" type="submit" style="margin-right:20px;">Search</button>
+        </form>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+          <ul class="navbar-nav" style="margin-right:10px;">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="modelsDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Models
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="modelsDropdownMenu" >
+                <li><a class="dropdown-item" href="#">Sports</a></li>
+                <li><a class="dropdown-item" href="#">SUV</a></li>
+                <li><a class="dropdown-item" href="#">Hatchback</a></li>
+                <li><a class="dropdown-item" href="#">SEDAN</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="navbar-nav" style="margin-right:10px;">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="servicesDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Services
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="servicesDropdownMenu">
+                <li><a class="dropdown-item" href="#">Book eservice</a></li>
+                <li><a class="dropdown-item" href="#">Find a dealer</a></li>
+                <li><a class="dropdown-item" href="#">Test Drive</a></li>
+                <li><a class="dropdown-item" href="#">Custom order</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="navbar-nav" style="margin-right:10px;">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="oldcarsDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Oldcars
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="oldcarsDropdownMenu">
+                <li><a class="dropdown-item" href="#">SELL</a></li>
+                <li><a class="dropdown-item" href="#">BUY</a></li>
+                <li><a class="dropdown-item" href="#">EXCHANGE</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex" style=" position:absolute; top:1; right:0;">
+              <button class="btn btn-outline-light" type="submit" >PROFILE
+                <span class="badge bg-secondary">9</span>
+                <span class="visually-hidden">unread messages</span>
+              </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    {% endblock navbar %}
     {% block content %}
     <h1>Welcome to Automobile Garage</h1>
-    {% endblock %}
+    {% endblock content %}
+    {% block footer %}
+    <h1>footer goes here</h1>
+    {% endblock footer %}
 </body>
 </html>
