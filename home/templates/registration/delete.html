@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Delete your account</title>
+{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <form action="../" method="POST">
+        {% csrf_token %}
+      <>
+      <input type="submit" value="Login"/>
+    </form>
+{% endblock content %}

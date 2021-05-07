@@ -1,10 +1,50 @@
 {% extends 'base.html' %}
 {% block title %}
-    <title>Login</title>
+    <title>Login to your account</title>
 {% endblock title %}
 {% block content %}
-    <form action="../" method="POST">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<div class="content">
+    <h1>Login to your account here:</h1>
+    <form method="POST" >
         {% csrf_token %}
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label class="col-form-label">Enter your email: </label>
+          </div>
+          <div class="col-auto">
+              <input type="email" placeholder="">
+          </div>
+          <div class="col-auto">
+            <span id="helpText" class="form-text">
+              {% if field.errors %}
+                <p class="help">{{ field.errors }}</p>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label class="col-form-label">{{ field.label_tag }}</label>
+          </div>
+          <div class="col-auto">
+            {{ field }}
+          </div>
+          <div class="col-auto">
+            <span id="helpText" class="form-text">
+              {% if field.errors %}
+                <p class="help">{{ field.errors }}</p>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+
         <input type="submit" value="Login"/>
     </form>
+    <br>
+    <p>
+        <a href="{% url 'home:signup' %}">New user? Create your account here</a>
+    </p>
+</div>
 {% endblock content %}

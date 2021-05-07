@@ -1,51 +1,42 @@
 {% extends 'base.html' %}
-{% include 'navbar.html'%}
 {% block title %}
     <title>Create an account</title>
 {% endblock title %}
 {% block content %}
-<style>
-.content {
-  max-width: 500px;
-  margin:0 auto;
-  text-align: center;
-  margin-top: 20px;
-  border: 10px solid black;
-  height: 100%;
-  background:#EEEEEE;
-  align-content: center;
-  align-items: center;
-  padding: 25px;
-  box-shadow: 0px 0px 96px 0px rgba(0,0,0,0.75);
-}
-</style>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
 <div class="content">
-    <h1>Create your account here:</h1>
-    <form action="." method="POST" >
+    <div class="form-label">Fill in the details to create an account</div>
+    <form method="POST" >
         {% csrf_token %}
-        {% for field in form %}
-        <div class="row g-3 align-items-center">
-          <div class="col-auto">
-            <label class="col-form-label">{{ field.label_tag }}</label>
+        <div class="container">
+          {% for field in form %}
+          <div class="row">
+            <div class="col">
+              {{ field.label_tag }}
+            </div>
+            <div class="col">
+              {{ field }}
+            </div>
+            <div class="row">
+                <span id="helpText" class="form-text">
+                  {% if field.errors %}
+                    <div class="help">{{ field.errors }}</div>
+                  {% endif %}
+                </span>
+            </div>
           </div>
-          <div class="col-auto">
-            {{ field }}
-          </div>
-          <div class="col-auto">
-            <span id="helpText" class="form-text">
-              {% if field.help_text %}
-                <p class="help">{{ field.help_text|safe }}</p>
-              {% endif %}
-            </span>
-          </div>
-        </div>
-        {% endfor %}
-        <div class="mb-3 form-check">
+          {% endfor %}
+          <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="termsAgree" required>
             <label class="form-check-label" for="termsAgree">By creating this account, I understand and agree to
             Our Privacy notice and Terms of Use (required)</label>
+          </div>
+          <div class="col">
+              <button type="submit" class="btn btn-outline-secondary">Create account</button>
+              <a href="{% url 'home:login' %}" class="btn btn-outline-secondary">Already a user? Login here</a>
+          </div>
         </div>
-        <input type="submit" value="Create account"/>
     </form>
 </div>
 {% endblock content %}
