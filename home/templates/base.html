@@ -9,11 +9,11 @@
     <title>Automobile Garage</title>
     {% endblock title %}
 </head>
-<body>
+<body style="min-height: 100vh;position:relative;padding-bottom:58px;">
 {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: 	#343a40;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#343a40;">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">AMS</a>
+        <a class="navbar-brand" href="/">AMG</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -60,10 +60,12 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light" type="submit" style="margin-right:20px;">Search</button>
           </form>
-          <form class="d-flex" style=" position:absolute; top:1; right:0;">
+          {% block navbarlogin %}
+          <form class="d-flex" style=" position:absolute; top:1; right:0;margin-right:10px;" action="/login">
               <button class="btn btn-outline-light" type="submit" >LOGIN
               </button>
           </form>
+          {% endblock navbarlogin %}
         </div>
       </div>
     </nav>
@@ -72,7 +74,7 @@
     <h1>Welcome to Automobile Garage</h1>
     {% endblock content %}
     {% block footer %}
-      <footer style="position: fixed;left: 0;bottom: 0;width: 100%;background-color:#343a40;color: white;text-align: center;height:60px">
+      <footer style="text-align:center;background-color:#343a40;color:#fff;bottom:0;width:100%;position:absolute;">
         <p>AUTOMOBILE GARAGE<br>
           <a href="amg@example.com">amg@example.com</a>
         </p>
