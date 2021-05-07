@@ -11,13 +11,9 @@
 </head>
 <body>
 {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: 	#343a40;">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">AMS</a>
-        <form class="d-flex" style="margin-left:20px;">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-light" type="submit" style="margin-right:20px;">Search</button>
-        </form>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -60,10 +56,12 @@
               </ul>
             </li>
           </ul>
+          <form class="d-flex" style="margin-left:20px;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light" type="submit" style="margin-right:20px;">Search</button>
+          </form>
           <form class="d-flex" style=" position:absolute; top:1; right:0;">
-              <button class="btn btn-outline-light" type="submit" >PROFILE
-                <span class="badge bg-secondary">9</span>
-                <span class="visually-hidden">unread messages</span>
+              <button class="btn btn-outline-light" type="submit" >LOGIN
               </button>
           </form>
         </div>
@@ -74,7 +72,11 @@
     <h1>Welcome to Automobile Garage</h1>
     {% endblock content %}
     {% block footer %}
-    <h1>footer goes here</h1>
+      <footer style="position: fixed;left: 0;bottom: 0;width: 100%;background-color:#343a40;color: white;text-align: center;height:60px">
+        <p>AUTOMOBILE GARAGE<br>
+          <a href="amg@example.com">amg@example.com</a>
+        </p>
+      </footer>
     {% endblock footer %}
 </body>
 </html>
