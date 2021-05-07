@@ -3,10 +3,19 @@
     <title>Login to your account</title>
 {% endblock title %}
 {% block content %}
+{% block navbarlogin %}
+{% endblock navbarlogin %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
 <div class="content">
-    <div class="form-label">Fill in the details to login to your account</div>
+<div class="form-label">Fill in the details to login to your account</div>
     <form method="POST" >
         {% csrf_token %}
         <div class="container">

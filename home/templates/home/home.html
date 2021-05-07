@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Home - AMG</title>
+{% endblock title %}
+{% block content %}
+{% if request.session.username %}
+  {% if messages %}
+      <div class="alert alert-success" role="alert">
+          {% for message in messages %}
+              <p>{{ message }} {{ request.session.username }}</p>
+          {% endfor %}
+      </div>
+  {% endif %}
+  {% block navbarlogin %}
+    <form class="d-flex" style=" position:absolute; top:1; right:0;margin-right:10px;" method="GET" action="/logout">
+      <button class="btn btn-outline-light" type="submit" >LOGOUT
+      </button>
+    </form>
+  {% endblock navbarlogin %}
+{% endif %}
+<h1>Welcome back, You are logged in</h1>
+{% endblock content %}

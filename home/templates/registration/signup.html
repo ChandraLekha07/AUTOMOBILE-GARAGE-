@@ -3,6 +3,18 @@
     <title>Create an account</title>
 {% endblock title %}
 {% block content %}
+{% block navbarlogin %}
+{% endblock navbarlogin %}
+{% if messages %}
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Well done!</h4>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+      <hr>
+        <p class="mb-0">You can <a href="{% url 'home:login' %}" class="alert-link">Login to your account</a> successfully now</p>
+    </div>
+{% endif %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
 <div class="content">

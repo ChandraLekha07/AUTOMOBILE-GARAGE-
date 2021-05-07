@@ -77,9 +77,6 @@ class UserLoginForm(forms.Form):
         email = self.cleaned_data.get('email')
         if not email.endswith('@gmail.com'):
             raise forms.ValidationError("Email should end with @gmail.com")
-        for instance in User.objects.all():
-            if instance.email == email:
-                raise forms.ValidationError('An account already exists with the given email', email)
         return email
 
     def clean_password(self):
