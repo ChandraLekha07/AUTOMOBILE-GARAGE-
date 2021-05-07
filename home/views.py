@@ -3,15 +3,11 @@ from django.shortcuts import render, reverse
 
 from django.views import View
 from .models import User
-from .forms import UserModelForm
+from .forms import UserModelForm,UserLoginForm
 
 # Create your views here.
 def render_index(request):
     template_name = 'home/index.html'
-    return render(request, template_name)
-
-def render_login(request):
-    template_name = 'registration/login.html'
     return render(request, template_name)
 
 class UserCreateView(View):
@@ -27,6 +23,23 @@ class UserCreateView(View):
         form = UserModelForm(request.POST)
         if form.is_valid():
             form.save()
+            return render(request, self.success_url)
+        context = {"form": form}
+        return render(request, self.template_name, context)
+
+class UserLoginView(View):
+    template_name = 'registration/login.html'
+    success_url = 'home/index.html'
+
+    def get(self, request, *args, **kwargs):
+        form = UserLoginForm()
+        context = {"form":form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            print("LOGIN SUCCESSFULL")
             return render(request, self.success_url)
         context = {"form": form}
         return render(request, self.template_name, context)

@@ -6,45 +6,32 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
 <div class="content">
-    <h1>Login to your account here:</h1>
+    <div class="form-label">Fill in the details to login to your account</div>
     <form method="POST" >
         {% csrf_token %}
-        <div class="row g-3 align-items-center">
-          <div class="col-auto">
-            <label class="col-form-label">Enter your email: </label>
+        <div class="container">
+          {% for field in form %}
+          <div class="row">
+            <div class="col">
+              {{ field.label_tag }}
+            </div>
+            <div class="col">
+              {{ field }}
+            </div>
+            <div class="row">
+                <span id="helpText" class="form-text">
+                  {% if field.errors %}
+                    <div class="help">{{ field.errors }}</div>
+                  {% endif %}
+                </span>
+            </div>
           </div>
-          <div class="col-auto">
-              <input type="email" placeholder="">
-          </div>
-          <div class="col-auto">
-            <span id="helpText" class="form-text">
-              {% if field.errors %}
-                <p class="help">{{ field.errors }}</p>
-              {% endif %}
-            </span>
-          </div>
-        </div>
-        <div class="row g-3 align-items-center">
-          <div class="col-auto">
-            <label class="col-form-label">{{ field.label_tag }}</label>
-          </div>
-          <div class="col-auto">
-            {{ field }}
-          </div>
-          <div class="col-auto">
-            <span id="helpText" class="form-text">
-              {% if field.errors %}
-                <p class="help">{{ field.errors }}</p>
-              {% endif %}
-            </span>
+          {% endfor %}
+          <div class="col">
+              <button type="submit" class="btn btn-outline-secondary">Login</button>
+              <a href="{% url 'home:signup' %}" class="btn btn-outline-secondary">New user? Create your account here</a>
           </div>
         </div>
-
-        <input type="submit" value="Login"/>
     </form>
-    <br>
-    <p>
-        <a href="{% url 'home:signup' %}">New user? Create your account here</a>
-    </p>
 </div>
 {% endblock content %}
