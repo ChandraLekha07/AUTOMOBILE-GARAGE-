@@ -1,12 +1,36 @@
 {% extends 'base.html' %}
 {% block title %}
-    <title>Update Account Details</title>
+  <title>Update your profile</title>
 {% endblock title %}
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
-    <form action="../" method="POST">
+<div class="content">
+    <div class="form-label">Enter updated details</div>
+        <form method="POST" >
         {% csrf_token %}
-        <input type="submit" value="Update"/>
-    </form>
+        <div class="container">
+          {% for field in form %}
+          <div class="row">
+            <div class="col">
+              {{ field.label_tag }}
+            </div>
+            <div class="col">
+              {{ field }}
+            </div>
+            <div class="row">
+                <span id="helpText" class="form-text">
+                  {% if field.errors %}
+                    <div class="help">{{ field.errors }}</div>
+                  {% endif %}
+                </span>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="col">
+              <button type="submit" class="btn btn-outline-secondary">Update</button>
+              <a href="{% url 'home:profile' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </div>
+</div>
 {% endblock content %}

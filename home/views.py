@@ -1,21 +1,13 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from django.views import View
 from .models import User
-from .forms import UserModelForm, UserLoginForm
+from .forms import UserModelForm, UserLoginForm, UserViewForm, UserUpdateForm
 
 # Create your views here.
 def render_index(request):
     template_name = 'home/index.html'
-    if 'username' in request.session:
-        return render(request, 'home/home.html')
-    return render(request, template_name)
-
-def render_home(request):
-    template_name = 'home/home.html'
-    if 'username' not in request.session:
-        return render(request, 'home/index.html')
     return render(request, template_name)
 
 class UserCreateView(View):
@@ -23,7 +15,7 @@ class UserCreateView(View):
 
     def get(self, request, *args, **kwargs):
         if 'username' in request.session:
-            return render(request, 'home/home.html')
+            return redirect('/')
         form = UserModelForm()
         context = {"form":form}
         return render(request, self.template_name, context)
@@ -39,11 +31,11 @@ class UserCreateView(View):
 
 class UserLoginView(View):
     template_name = 'registration/login.html'
-    success_url = 'home/home.html'
+    success_url = 'home/index.html'
 
     def get(self, request, *args, **kwargs):
         if 'username' in request.session:
-            return render(request, 'home/home.html')
+            return redirect('/')
         form = UserLoginForm()
         context = {"form":form}
         return render(request, self.template_name, context)
@@ -69,6 +61,7 @@ class UserLoginView(View):
                 list(messages.get_messages(request))
         context = {"form": form}
         return render(request, self.template_name, context)
+
 def logout(request):
     if request.method == 'GET':
         try:
@@ -76,37 +69,49 @@ def logout(request):
             request.session.flush()
         except KeyError:
             pass
-        return render(request, 'home/index.html')
-    return render(request, 'home/home.html')
+    return redirect('/')
 
-# class UserUpdateView(View):
-#     template_name = 'registration/update.html'
-#
-#     def get(self, request, *args, **kwargs):
-#         form = UserModelForm()
-#         context = {"form":form}
-#         return render(request, self.template_name, context)
-#
-#     def post(self, request, *args, **kwargs):
-#         form = UserModelForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#         context = {"form": form}
-#         return render(request, self.template_name, context)
-#
-# class UserDeleteView(View):
-#     template_name = 'registration/delete.html'
-#     success_url = 'registration/login.html'
-#
-#     def get(self, request, *args, **kwargs):
-#         form = UserModelForm()
-#         context = {"form":form}
-#         return render(request, self.template_name, context)
-#
-#     def post(self, request, *args, **kwargs):
-#         form = UserModelForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return render(request, self.success_url)
-#         context = {"form": form}
-#         return render(request, self.template_name, context)
+def profile(request):
+    template_name = 'registration/profile.html'
+    if 'username' in request.session:
+        if request.method == 'GET':
+            object = User.objects.get(email=request.session.get('username'))
+            form = UserViewForm(instance=object)
+            context = {"form": form}
+            return render(request, template_name, context)
+    return redirect('/login')
+
+def update(request):
+    template_name = 'registration/update.html'
+    if 'username' in request.session:
+        if request.method == 'GET':
+            object = User.objects.get(email=request.session.get('username'))
+            form = UserUpdateForm(instance=object)
+            context = {"form": form}
+            return render(request, template_name, context)
+        if request.method == 'POST':
+            object = User.objects.get(email=request.session.get('username'))
+            form = UserUpdateForm(request.POST, instance=object)
+            if form.is_valid():
+                form.save()
+                messages.info(request, 'Your account details were updated successfully!')
+                list(messages.get_messages(request))
+                return redirect('/account')
+    return redirect('/login')
+
+def delete(request):
+    template_name = 'registration/confirm_delete.html'
+    if 'username' in request.session:
+        if request.method == 'GET':
+            object = User.objects.get(email=request.session.get('username'))
+            form = UserViewForm(instance=object)
+            context = {"form": form}
+            return render(request, template_name, context)
+        if request.method == 'POST':
+            object = User.objects.get(email=request.session.get('username'))
+            object.delete()
+            request.session.flush()
+            messages.info(request, 'Your account was deleted successfully!')
+            list(messages.get_messages(request))
+            return render(request, 'home/index.html')
+    return redirect('/login')
