@@ -60,12 +60,12 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light" type="submit" style="margin-right:20px;">Search</button>
           </form>
-          {% block navbarlogin %}
-          <form class="d-flex" style=" position:absolute; top:1; right:0;margin-right:10px;" action="/login">
-              <button class="btn btn-outline-light" type="submit" >LOGIN
+          {% block navbarprofile %}
+          <form class="d-flex" style=" position:absolute; top:1; right:0;margin-right:10px;" method="get" action="/login">
+              <button class="btn btn-outline-light" type="submit" >Your account
               </button>
           </form>
-          {% endblock navbarlogin %}
+          {% endblock navbarprofile %}
         </div>
       </div>
     </nav>

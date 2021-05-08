@@ -11,12 +11,7 @@
           {% endfor %}
       </div>
   {% endif %}
-  {% block navbarlogin %}
-    <form class="d-flex" style=" position:absolute; top:1; right:0;margin-right:10px;" method="GET" action="/logout">
-      <button class="btn btn-outline-light" type="submit" >LOGOUT
-      </button>
-    </form>
-  {% endblock navbarlogin %}
 {% endif %}
 <h1>Welcome back, You are logged in</h1>
+<a href="{% url 'home:logout' %}" class="btn btn-outline-secondary">LOGOUT</a>
 {% endblock content %}
