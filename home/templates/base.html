@@ -46,8 +46,8 @@
           </ul>
           <ul class="navbar-nav" style="margin-right:10px;">
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="oldcarsDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Oldcars
+              <a class="nav-link dropdown-toggle" id="oldcarsDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Shop
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="oldcarsDropdownMenu">
                 <li><a class="dropdown-item" href="#">SELL</a></li>
@@ -56,6 +56,7 @@
               </ul>
             </li>
           </ul>
+
           <form class="d-flex" style="margin-left:20px;">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light" type="submit" style="margin-right:20px;">Search</button>
@@ -67,9 +68,9 @@
                     Your Account
                   </a>
                   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <li><a class="dropdown-item" href="{% url 'home:profile' %}">Profile</a></li>
-                    <li><a class="dropdown-item" href="{% url 'home:profile' %}">Your orders</a></li>
-                    <li><a class="dropdown-item" href="{% url 'home:profile' %}">Settings</a></li>
+                    <li><a class="dropdown-item" href="{% url 'home:profile' %}">Your profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'shop:shop-home' %}">Your orders</a></li>
+                    <li><a class="dropdown-item" href="{% url 'home:profile' %}">Dashboard</a></li>
                     <li><a class="dropdown-item" href="{% url 'home:logout' %}">Logout</a></li>
                   </ul>
                 </li>

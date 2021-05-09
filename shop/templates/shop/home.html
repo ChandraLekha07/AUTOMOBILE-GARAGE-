@@ -5,79 +5,32 @@
 {% block content %}
 {% block navbarlogin %}
 {% endblock navbarlogin %}
-<h1 style="margin-top:80px;font-size:30px;text-align:center">YOUR PREVIOUS ORDERS</h1>
-<div class="card-group">
-<div class="card" style="width: 18rem;text-align:center;padding:3px;margin-left:10px;margin-right:10px;margin-top:30px;margin-bottom:10px;">
-  <a href="#"><img class="card-img-top" src="/static/images/cards/card1.png" alt="Card image cap"></a>
-  <div class="card-body"></div>
-  <p class="card-text">NEW JAGUAR F‑PACE</p>
-  <p>Luxury performance SUV offering practicality and efficiency.</p>
-</div>
-<div class="card" style="width: 18rem;text-align:center;padding:3px;margin-left:10px;margin-right:10px;margin-top:30px;margin-bottom:10px;">
-  <a href="#"><img class="card-img-top" src="/static/images/cards/card2.png" alt="Card image cap"></a>
-  <div class="card-body"></div>
-  <p class="card-text">NEW JAGUAR F‑TYPE</p>
-  <p>Pulse-quickening, pure Jaguar sports car.</p>
-</div>
-<div class="card" style="width: 18rem;text-align:center;padding:3px;margin-left:10px;margin-right:10px;margin-top:30px;margin-bottom:10px;">
-  <a href="#"><img class="card-img-top" src="/static/images/cards/card3.jpg" alt="Card image cap"></a>
-  <div class="card-body"></div>
-  <p class="card-text">Range Rover Sports</p>
-  <p>The most dynamic Range Rover.</p>
-</div>
-<div class="card" style="width: 18rem;text-align:center;padding:3px;margin-left:10px;margin-right:10px;margin-top:30px;margin-bottom:10px;">
-    <a href="#"><img class="card-img-top" src="/static/images/cards/card5.jpg" alt="Card image cap" style="margin-top:50px"></a>
-    <div class="card-body"></div>
-    <p class="card-text">Toyota Corolla</p>
-    <p>The most Luxury Cars</p>
-  </div>
-</div>
-<h1 style="margin-top:80px;font-size:30px;text-align:center">OUR LATEST CARS</h1>
-<div class="card-group">
-<div class="card" style="width: 18rem;text-align:center;padding:3px;margin-left:10px;margin-right:10px;margin-top:30px;margin-bottom:10px;">
-  <a href="#"><img class="card-img-top" src="/static/images/cards/card1.png" alt="Card image cap"></a>
-  <div class="card-body"></div>
-  <p class="card-text">NEW JAGUAR F‑PACE</p>
-  <p>Luxury performance SUV offering practicality and efficiency.</p>
-</div>
-<div class="card" style="width: 18rem;text-align:center;padding:3px;margin-left:10px;margin-right:10px;margin-top:30px;margin-bottom:10px;">
-  <a href="#"><img class="card-img-top" src="/static/images/cards/card2.png" alt="Card image cap"></a>
-  <div class="card-body"></div>
-  <p class="card-text">NEW JAGUAR F‑TYPE</p>
-  <p>Pulse-quickening, pure Jaguar sports car.</p>
-</div>
-<div class="card" style="width: 18rem;text-align:center;padding:3px;margin-left:10px;margin-right:10px;margin-top:30px;margin-bottom:10px;">
-  <a href="#"><img class="card-img-top" src="/static/images/cards/card3.jpg" alt="Card image cap"></a>
-  <div class="card-body"></div>
-  <p class="card-text">Range Rover Sports</p>
-  <p>The most dynamic Range Rover.</p>
-</div>
-<div class="card" style="width: 18rem;text-align:center;padding:3px;margin-left:10px;margin-right:10px;margin-top:30px;margin-bottom:10px;">
-    <a href="#"><img class="card-img-top" src="/static/images/cards/card5.jpg" alt="Card image cap" style="margin-top:50px"></a>
-    <div class="card-body"></div>
-    <p class="card-text">Toyota Corolla</p>
-    <p>The most Luxury Cars</p>
-  </div>
-</div>
-<h1 align="center" style="margin-top:30px">SERVICES</h1>
+<h1 align="center" style="margin-top:30px"></h1>
 <div class="row" style="width:100%;">
 <div class="col-sm-6">
   <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
     <div class="card-body">
-      <h5 class="card-title">Book Online</h5>
-      <p class="card-text">Book your Favourite car onlie with free of cost</p>
-      <a href="#" class="btn btn-primary">Book Online</a>
+      <h5 class="card-title">Buy Verified Old Car</h5>
+      <p class="card-text">Buy a verified oldcar</p>
+      <a href="{% url 'shop:shop-buy' %}" class="btn btn-primary">Buy</a>
     </div>
   </div>
 </div>
 <div class="col-sm-6">
   <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
     <div class="card-body">
-      <h5 class="card-title">Dealers</h5>
-      <p class="card-text">Find the Nearest Dealer to avail your car</p>
-      <a href="#" class="btn btn-primary">Find Dealer</a>
+      <h5 class="card-title">Sell Old Car</h5>
+      <p class="card-text">Sell your old car with the best deal</p>
+      <a href="{% url 'shop:shop-sell' %}" class="btn btn-primary">Sell</a>
     </div>
   </div>
 </div>
+<div class="col-sm-6">
+<div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
+  <div class="card-body">
+    <h5 class="card-title">Exchange Your Car</h5>
+    <p class="card-text">Exchange your car with your favourite new model</p>
+    <a href="{% url 'shop:shop-exchange' %}" class="btn btn-primary">Exchange</a>
+  </div>
 </div>
 {% endblock content %}
