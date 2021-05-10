@@ -50,13 +50,12 @@
                 Shop
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="oldcarsDropdownMenu">
-                <li><a class="dropdown-item" href="#">SELL</a></li>
-                <li><a class="dropdown-item" href="#">BUY</a></li>
-                <li><a class="dropdown-item" href="#">EXCHANGE</a></li>
+                <li><a class="dropdown-item" href="{% url 'shop:shop-sell'%}">SELL</a></li>
+                <li><a class="dropdown-item" href="{% url 'shop:shop-buy'%}">BUY</a></li>
+                <li><a class="dropdown-item" href="{% url 'shop:shop-exchange'%}">EXCHANGE</a></li>
               </ul>
             </li>
           </ul>
-
           <form class="d-flex" style="margin-left:20px;">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light" type="submit" style="margin-right:20px;">Search</button>

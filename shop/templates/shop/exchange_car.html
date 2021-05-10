@@ -1,1 +1,22 @@
-<h1>Exchange your car</h1>
+{% extends 'base.html' %}
+{% block title %}
+    <title>Exchange car</title>
+{% endblock title %}
+{% block content %}
+<ul class="nav nav-pills justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'shop:shop-buy' %}">BUY CAR</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'shop:shop-sell' %}">SELL CAR</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{% url 'shop:shop-exchange' %}">EXCHANGE CAR</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="">DEALER LOCATER</a>
+  </li>
+</ul>
+
+
+{% endblock %}

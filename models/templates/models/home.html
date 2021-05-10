@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>MODELS - AMG</title>
+{% endblock title %}
+{% block content %}
+{% for object in objects %}
+{% load static %}
+<div class="col-sm-6">
+  </div>
+    <div class="card" style="width: 18rem;">
+      <img src="{% static {{object.image}} %}" alt="{{ object.make }} {{ object.name}}">
+      <div class="card-body">
+        <h5 class="card-title">{{ object.make }}</h5>
+        <p class="card-text">{{ object.name }}</p>
+        <p class="card-text">{{ object.variant }}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
