@@ -45,5 +45,5 @@ class Car(models.Model):
         choices=VARIANT_CHOICES,
         default='',
     )
-    image = models.ImageField(upload_to='models/static/images/', blank=True)
+    image = models.ImageField(upload_to='', blank=True)
     description = models.TextField()
