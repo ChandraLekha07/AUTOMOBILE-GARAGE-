@@ -47,3 +47,20 @@ class Car(models.Model):
     )
     image = models.ImageField(upload_to='', blank=True)
     description = models.TextField()
+    
+    def remove_on_image_update(self):
+        try:
+            obj = Car.objects.get(id=self.id)
+        except Car.DoesNotExist:
+            return
+        if obj.image and self.image and obj.image != self.image:
+            obj.image.delete()
+            
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        return super(Car, self).delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.remove_on_image_update()
+        return super(Car, self).save(*args, **kwargs)
+        
