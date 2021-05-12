@@ -4,6 +4,15 @@
 {% endblock title %}
 {% block content %}
 <h1 align="center" style="margin-top: 10px;">CAR MODELS</h1>
+<div class="row" style="margin-right: 10px;margin-left:10px;margin-top:10px;margin-bottom:10px">
+  <div class="col">
+    <div class="card card-body">
+      <form method="get" align="center">
+        {{myFilter.form}}
+        <button class="btn btn-primary" type="submit">
+          Search
+        </button>
+      </form>
 {% for object in objects%}
 <div class="card" style="width: 18rem;">
   <img class="card-img-top" src="{{object.image.url}}" alt="Card image cap">
@@ -14,4 +23,7 @@
   </div>
 </div>
 {% endfor %}
+</div>
+</div>
+</div>
 {% endblock content %}

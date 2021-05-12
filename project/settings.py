@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'models',
     'shop',
     'services',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
