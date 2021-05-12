@@ -3,19 +3,6 @@
     <title>Sell old car</title>
 {% endblock title %}
 {% block content %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type=text/javascript>
-        $(function() {
-          $('a#otp').on('click', function(e) {
-            e.preventDefault()
-            $.getJSON('/shop/sell',
-                function(data) {
-              //do nothing
-            });
-            return false;
-          });
-        });
-</script>
 <ul class="nav nav-pills justify-content-center">
   <li class="nav-item">
     <a class="nav-link" href="{% url 'shop:shop-buy' %}">BUY CAR</a>
@@ -53,7 +40,6 @@
         </div>
         {% endfor %}
         <button style="width:100px;height:40px;" type="submit" class="btn btn-outline-secondary">Sell now</button>
-        <a href="#" id="otp"><button style="width:120px;height:40px;" class="btn btn-outline-secondary">Resend otp</button></a>
       </div>
     </div>
   </form>

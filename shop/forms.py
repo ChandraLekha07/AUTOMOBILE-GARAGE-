@@ -8,8 +8,6 @@ class SellCarModelForm(forms.ModelForm):
                                                                               'placeholder': 'Enter your full name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control',
                                                                          'placeholder':'Enter your email'}))
-    otp = forms.CharField(max_length=6, widget=forms.TextInput(attrs={'class':'form-control',
-                                                                      'placeholder':'Enter otp'}))
     STATE_CHOICES = [
         ('', 'SELECT STATE'),
         ('Andhra Pradesh', 'Andhra Pradesh'),
@@ -172,6 +170,7 @@ class SellCarModelForm(forms.ModelForm):
             'dealer',
         ]
 
+
     def clean_fullname(self):
         fullname = self.cleaned_data.get('fullname')
         if len(fullname) < 3:
@@ -191,15 +190,6 @@ class SellCarModelForm(forms.ModelForm):
             raise forms.ValidationError("An account doesn't exist with the given email")
         return email
 
-    def clean_otp(self):
-        otp = self.cleaned_data.get('otp')
-        if not otp.isalnum():
-            raise forms.ValidationError('OTP generated is alphanumeric')
-        if not otp:
-            raise forms.ValidationError('OTP Verification is required!')
-        if len(otp)!=6:
-            raise forms.ValidationError('OTP is 6 character long!')
-
     def clean_year(self):
         year = int(self.cleaned_data.get('year'))
         if len(str(year))!=4 or year<0:
@@ -218,6 +208,9 @@ class SellCarModelForm(forms.ModelForm):
             raise forms.ValidationError("Cannot be less than 5 digits")
         if regno<0:
             raise forms.ValidationError("Registration number cannot be negative")
+        for instance in SellCar.objects.all():
+            if instance.regno == regno:
+                raise forms.ValidationError('This car with regno '+str(regno)+' is already on sale!')
         return regno
 
     def clean_expectedprice(self):

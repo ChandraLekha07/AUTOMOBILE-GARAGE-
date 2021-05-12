@@ -1,10 +1,11 @@
 from django.db import models
 
+from models.models import Car
+
 # Create your models here.
 class SellCar(models.Model):
     fullname = models.CharField(max_length= 100, blank=False)
     email = models.EmailField(blank=False)
-    otp = models.CharField(max_length=6, blank=False)
     STATE_CHOICES = [
         ('', 'SELECT STATE'),
         ('Andhra Pradesh', 'Andhra Pradesh'),
@@ -85,7 +86,7 @@ class SellCar(models.Model):
     variant = models.CharField(max_length=50, choices=VARIANT_CHOICES, default='')
     year = models.IntegerField()
     kilometer = models.DecimalField(max_digits= 10, decimal_places= 2)
-    regno = models.BigIntegerField()
+    regno = models.IntegerField()
     expectedprice = models.DecimalField(max_digits= 10, decimal_places= 2)
     DEALER_STATE_CHOICES = [
         ('', 'SELECT STATE'),
