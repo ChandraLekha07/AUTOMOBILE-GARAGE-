@@ -24,6 +24,7 @@
                 Models
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="modelsDropdownMenu" >
+                <li><a class="dropdown-item" href="{% url 'models:models-home'%}">Show All</a></li>
                 <li><a class="dropdown-item" href="#">Sports</a></li>
                 <li><a class="dropdown-item" href="#">SUV</a></li>
                 <li><a class="dropdown-item" href="#">Hatchback</a></li>
@@ -37,6 +38,7 @@
                 Services
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="servicesDropdownMenu">
+                <li><a class="dropdown-item" href="#">Show All</a></li>
                 <li><a class="dropdown-item" href="#">Book eservice</a></li>
                 <li><a class="dropdown-item" href="#">Find a dealer</a></li>
                 <li><a class="dropdown-item" href="#">Test Drive</a></li>
@@ -46,10 +48,11 @@
           </ul>
           <ul class="navbar-nav" style="margin-right:10px;">
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="oldcarsDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="{% url 'shop:shop-home'%}" id="oldcarsDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Shop
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="oldcarsDropdownMenu">
+                <li><a class="dropdown-item" href="{% url 'shop:shop-home'%}">Show All</a></li>
                 <li><a class="dropdown-item" href="{% url 'shop:shop-sell'%}">SELL</a></li>
                 <li><a class="dropdown-item" href="{% url 'shop:shop-buy'%}">BUY</a></li>
                 <li><a class="dropdown-item" href="{% url 'shop:shop-exchange'%}">EXCHANGE</a></li>

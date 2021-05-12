@@ -4,95 +4,14 @@
 {% endblock title %}
 {% block content %}
 <h1 align="center" style="margin-top: 10px;">CAR MODELS</h1>
-<div class="row" style="width:100%;">
-  <div class="col-sm-6">
-    <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
-      <div class="card-body">
-        <h5 class="card-title">SEDAN</h5>
-        <p class="card-text">Select Your Favoirite cars inSedan </p>
-        <a href="#" class="btn btn-primary">KNOW MORE</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
-      <div class="card-body">
-        <h5 class="card-title">COUPE</h5>
-        <p class="card-text">Select Your Favoirite cars in Coupe</p>
-        <a href="#" class="btn btn-primary">KNOW MORE</a>
-      </div>
-    </div>
+{% for object in objects%}
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{object.image.url}}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{object.make}}</h5>
+    <p class="card-text">{{object.variant}}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
-<div class="row" style="width:100%;">
-  <div class="col-sm-6">
-    <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
-      <div class="card-body">
-        <h5 class="card-title">SPORTS</h5>
-        <p class="card-text">Select Your Favoirite cars in Sports</p>
-        <a href="#" class="btn btn-primary">KNOW MORE</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
-      <div class="card-body">
-        <h5 class="card-title">STATION WAGON</h5>
-        <p class="card-text">Select Your Favoirite cars in Station Wagon</p>
-        <a href="#" class="btn btn-primary">KNOW MORE</a>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row" style="width:100%;">
-  <div class="col-sm-6">
-    <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
-      <div class="card-body">
-        <h5 class="card-title">CONVERTIBLE</h5>
-        <p class="card-text">Select Your Favoirite cars in Convertible</p>
-        <a href="#" class="btn btn-primary">KNOW MORE</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
-      <div class="card-body">
-        <h5 class="card-title">HATCHBACK</h5>
-        <p class="card-text">Select Your Favoirite cars in Hatchback</p>
-        <a href="#" class="btn btn-primary">KNOW MORE</a>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row" style="width:100%;">
-  <div class="col-sm-6">
-    <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
-      <div class="card-body">
-        <h5 class="card-title">SPORTS-UTILITY-VEHICLE(SUV)</h5>
-        <p class="card-text">Select Your Favoirite cars in SUV</p>
-        <a href="#" class="btn btn-primary">KNOW MORE</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
-      <div class="card-body">
-        <h5 class="card-title">MINIVAN</h5>
-        <p class="card-text">Select Your Favoirite cars in Minivan</p>
-        <a href="#" class="btn btn-primary">KNOW MORE</a>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row" style="width:100%;">
-  <div class="col-sm-6">
-    <div class="card" style="margin-left:10px;margin-top: 30px;margin-bottom: 30px;">
-      <div class="card-body">
-        <h5 class="card-title">PICKUPTRUCK</h5>
-        <p class="card-text">Select Your Favoirite cars in Pickuptruck</p>
-        <a href="#" class="btn btn-primary">KNOW MORE</a>
-      </div>
-    </div>
-  </div>
-</div>
+{% endfor %}
 {% endblock content %}

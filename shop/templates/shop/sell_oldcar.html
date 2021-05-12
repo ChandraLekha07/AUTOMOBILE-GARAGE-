@@ -3,6 +3,19 @@
     <title>Sell old car</title>
 {% endblock title %}
 {% block content %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#otp').on('click', function(e) {
+            e.preventDefault()
+            $.getJSON('/shop/sell',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
 <ul class="nav nav-pills justify-content-center">
   <li class="nav-item">
     <a class="nav-link" href="{% url 'shop:shop-buy' %}">BUY CAR</a>
@@ -14,10 +27,35 @@
     <a class="nav-link" href="{% url 'shop:shop-exchange' %}">EXCHANGE CAR</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="">DEALER LOCATER</a>
+    <a class="nav-link" href="#">DEALER LOCATER</a>
   </li>
 </ul>
-
-
-
+<div style="margin: 25px;">
+  <form method="POST" >
+    {% csrf_token %}
+    <div class="container">
+      <div class="row justify-content-evenly">
+        {% for field in form %}
+        <div class="col-4">
+          <div class="input-group mb-3">
+            {{ field.label_tag }}
+          </div>
+        </div>
+        <div class="col-4">
+            {{ field }}
+        </div>
+        <div class="col-4">
+          <span class="form-text text-muted">
+              {% if field.errors %}
+              <div class="help">{{ field.errors }}</div>
+            {% endif %}
+          </span>
+        </div>
+        {% endfor %}
+        <button style="width:100px;height:40px;" type="submit" class="btn btn-outline-secondary">Sell now</button>
+        <a href="#" id="otp"><button style="width:120px;height:40px;" class="btn btn-outline-secondary">Resend otp</button></a>
+      </div>
+    </div>
+  </form>
+</div>
 {% endblock %}
