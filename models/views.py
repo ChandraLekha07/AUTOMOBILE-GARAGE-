@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from .models import Car
 from .filters import CarFilter
+from django.core.paginator import Paginator
 
 # Create your views here.
 def models_home(request):
@@ -10,5 +11,8 @@ def models_home(request):
         objects = Car.objects.all()
         myFilter = CarFilter(request.GET,queryset=objects)
         objects=myFilter.qs
-        context = {"objects":objects,'myFilter':myFilter}
+        page_num =request.GET.get('page')
+        models_paginator =Paginator(objects,8)
+        page=models_paginator.get_page(page_num)
+        context = {"objects":objects,'myFilter':myFilter,'count':models_paginator.count,'page':page}
     return render(request, template_name, context)
