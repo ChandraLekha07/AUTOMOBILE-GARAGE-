@@ -30,7 +30,7 @@ class Car(models.Model):
     variant = models.ForeignKey(Variant, on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
-        return self.firstname+' '+self.lastname
+        return self.make.name+' '+self.model.name+' '+self.variant.name
 
     image = models.ImageField(upload_to='', blank=True)
     description = models.TextField()
