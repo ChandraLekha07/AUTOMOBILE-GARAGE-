@@ -1,6 +1,8 @@
 from django import forms
 
-from home.models import User
+from home.models import User, City
+from models.models import Model, Variant
+
 from .models import SellCar
 
 class SellCarModelForm(forms.ModelForm):
@@ -8,84 +10,7 @@ class SellCarModelForm(forms.ModelForm):
                                                                               'placeholder': 'Enter your full name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control',
                                                                          'placeholder':'Enter your email'}))
-    STATE_CHOICES = [
-        ('', 'SELECT STATE'),
-        ('Andhra Pradesh', 'Andhra Pradesh'),
-        ('Assam', 'Assam'),
-        ('Bihar', 'Bihar'),
-        ('Chandigarh', 'Chandigarh'),
-        ('Chhattisgarh', 'Chhattisgarh'),
-        ('Delhi', 'Delhi'),
-        ('Gujarat', 'Gujarat'),
-        ('Haryana', 'Haryana'),
-        ('Himachal Pradesh', 'Himachal Pradesh'),
-        ('Jammu & Kashmir', 'Jammu & Kashmir'),
-        ('Karnataka', 'Karnataka'),
-        ('Kerala', 'Kerala'),
-        ('Madhya Pradesh', 'Madhya Pradesh'),
-        ('Maharashtra', 'Maharashtra'),
-        ('Orissa', 'Orissa'),
-        ('Puducherry', 'Puducherry'),
-        ('Punjab', 'Punjab'),
-        ('Rajasthan', 'Rajasthan'),
-        ('Tamil Nadu', 'Tamil Nadu'),
-        ('Telangana', 'Telangana'),
-        ('Uttar Pradesh', 'Uttar Pradesh'),
-        ('Uttaranchal', 'Uttaranchal'),
-        ('West Bengal', 'West Bengal'),
-    ]
-    state = forms.ChoiceField(choices=STATE_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
-    CITY_CHOICES = [
-        ('', 'SELECT CITY'),
-        ('Delhi', 'Delhi'),
-        ('Mumbai', 'Mumbai'),
-        ('Ahmedabad', 'Ahmedabad'),
-        ('Bangalore', 'Bangalore'),
-        ('Chennai', 'Chennai'),
-        ('Chandigarh', 'Chandigarh'),
-        ('Coimbatore', 'Coimbatore'),
-        ('Gurgaon', 'Gurgaon'),
-        ('Hyderabad', 'Hyderabad'),
-        ('Jaipur', 'Jaipur'),
-        ('Kolkata', 'Kolkata'),
-        ('Lucknow', 'Lucknow'),
-        ('Noida', 'Noida'),
-        ('Thane', 'Thane'),
-        ('Patna', 'Patna'),
-        ('Pune', 'Pune'),
-    ]
-    city = forms.ChoiceField(choices=CITY_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
-    MAKE_CHOICES = [
-        ('', 'Select Make'),
-        ('BENZ', 'Benz'),
-        ('AUDI', 'Audi'),
-        ('BMW', 'BMW'),
-        ('TOYOTA', 'Toyota'),
-        ('SUZUKI', 'Suzuki'),
-    ]
-    make = forms.ChoiceField(choices=MAKE_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
-    NAME_CHOICES = [
-        ('', 'Select Model'),
-        ('one', 'M1'),
-        ('two', 'M2'),
-        ('three', 'M3'),
-        ('four', 'M4'),
-        ('five', 'M5'),
-    ]
-    name = forms.ChoiceField(choices=NAME_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
-    VARIANT_CHOICES = [
-        ('', 'Select Variant'),
-        ('sedan', 'SEDAN'),
-        ('coupe', 'COUPE'),
-        ('sports', 'SPORTS CAR'),
-        ('stationwagon', 'STATION WAGON'),
-        ('hatchback', 'HATCHBACK'),
-        ('convertible', 'CONVERTIBLE'),
-        ('suv', 'SPORT-UTILITY VEHICLE (SUV)'),
-        ('minivan', 'MINIVAN'),
-        ('pickup', ' PICKUP TRUCK'),
-    ]
-    variant = forms.ChoiceField(choices=VARIANT_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+
     year = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'class': 'form-control',
                                                                               'placeholder': 'Enter year vehicle was bought'}))
     kilometer = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control',
@@ -94,82 +19,43 @@ class SellCarModelForm(forms.ModelForm):
                                                                               'placeholder': 'Enter your vehicle registration id'}))
     expectedprice = forms.CharField(max_length= 10, widget=forms.TextInput(attrs={'class': 'form-control',
                                                                               'placeholder': 'Enter expected price (in number)'}))
-    DEALER_STATE_CHOICES = [
-        ('', 'SELECT STATE'),
-        ('Andhra Pradesh', 'Andhra Pradesh'),
-        ('Assam', 'Assam'),
-        ('Bihar', 'Bihar'),
-        ('Chandigarh', 'Chandigarh'),
-        ('Chhattisgarh', 'Chhattisgarh'),
-        ('Delhi', 'Delhi'),
-        ('Gujarat', 'Gujarat'),
-        ('Haryana', 'Haryana'),
-        ('Himachal Pradesh', 'Himachal Pradesh'),
-        ('Jammu & Kashmir', 'Jammu & Kashmir'),
-        ('Karnataka', 'Karnataka'),
-        ('Kerala', 'Kerala'),
-        ('Madhya Pradesh', 'Madhya Pradesh'),
-        ('Maharashtra', 'Maharashtra'),
-        ('Orissa', 'Orissa'),
-        ('Puducherry', 'Puducherry'),
-        ('Punjab', 'Punjab'),
-        ('Rajasthan', 'Rajasthan'),
-        ('Tamil Nadu', 'Tamil Nadu'),
-        ('Telangana', 'Telangana'),
-        ('Uttar Pradesh', 'Uttar Pradesh'),
-        ('Uttaranchal', 'Uttaranchal'),
-        ('West Bengal', 'West Bengal'),
-    ]
-    dealer_state = forms.ChoiceField(choices=DEALER_STATE_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
-    DEALER_CITY_CHOICES = [
-        ('', 'SELECT CITY'),
-        ('Delhi', 'Delhi'),
-        ('Mumbai', 'Mumbai'),
-        ('Ahmedabad', 'Ahmedabad'),
-        ('Bangalore', 'Bangalore'),
-        ('Chennai', 'Chennai'),
-        ('Chandigarh', 'Chandigarh'),
-        ('Coimbatore', 'Coimbatore'),
-        ('Gurgaon', 'Gurgaon'),
-        ('Hyderabad', 'Hyderabad'),
-        ('Jaipur', 'Jaipur'),
-        ('Kolkata', 'Kolkata'),
-        ('Lucknow', 'Lucknow'),
-        ('Noida', 'Noida'),
-        ('Thane', 'Thane'),
-        ('Patna', 'Patna'),
-        ('Pune', 'Pune'),
-    ]
-    dealer_city = forms.ChoiceField(choices=DEALER_CITY_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
-    DEALER_CHOICES = [
-        ('', 'SELECT DEALER'),
-        ('1', 'DEALER A'),
-        ('2', 'DEALER B'),
-        ('3', 'DEALER C'),
-        ('4', 'DEALER D'),
-        ('5', 'DEALER E'),
-    ]
-    dealer = forms.ChoiceField(choices=DEALER_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = SellCar
-        fields = [
-            'fullname',
-            'email',
-            'state',
-            'city',
-            'make',
-            'name',
-            'variant',
-            'year',
-            'kilometer',
-            'regno',
-            'expectedprice',
-            'dealer_state',
-            'dealer_city',
-            'dealer',
-        ]
+        fields = '__all__'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.none()
+        self.fields['model'].queryset = Model.objects.none()
+        self.fields['variant'].queryset = Variant.objects.none()
+
+        if 'state' in self.data:
+            try:
+                state_id = int(self.data.get('state'))
+                self.fields['city'].queryset = City.objects.filter(state_id=state_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['city'].queryset = self.instance.state.city_set.order_by('name')
+
+        if 'make' in self.data:
+            try:
+                make_id = int(self.data.get('make'))
+                self.fields['model'].queryset = Model.objects.filter(make_id=make_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty Model queryset
+        elif self.instance.pk:
+            self.fields['model'].queryset = self.instance.make.model_set.order_by('name')
+
+        if 'model' in self.data:
+            try:
+                model_id = int(self.data.get('model'))
+                self.fields['variant'].queryset = Variant.objects.filter(model_id=model_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty Variant queryset
+        elif self.instance.pk:
+            self.fields['variant'].queryset = self.instance.model.variant_set.order_by('name')
 
     def clean_fullname(self):
         fullname = self.cleaned_data.get('fullname')

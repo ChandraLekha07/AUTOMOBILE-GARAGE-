@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 from django.views import View
 from .models import User
 from .forms import UserModelForm, UserLoginForm, UserViewForm, UserUpdateForm
+
+from .models import User, City
 
 # Create your views here.
 def render_index(request):
@@ -28,6 +31,11 @@ class UserCreateView(View):
             list(messages.get_messages(request))
         context = {"form": form}
         return render(request, self.template_name, context)
+
+def load_cities(request):
+    state_id = request.GET.get('state_id')
+    cities = City.objects.filter(state_id=state_id).all()
+    return render(request, 'home/city_dropdown_list_options.html', {'cities': cities})
 
 class UserLoginView(View):
     template_name = 'registration/login.html'

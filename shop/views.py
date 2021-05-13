@@ -4,7 +4,7 @@ from django.views import View
 
 from .forms import SellCarModelForm
 
-from home.models import Dealer
+from models.models import Make, Model, Variant
 
 import smtplib, ssl
 
@@ -39,6 +39,16 @@ class SellCreateView(View):
                 return render(request, self.success_url, context)
             return render(request, self.template_name, context)
         return redirect('/login')
+
+def load_models(request):
+    make_id = request.GET.get('make_id')
+    models = Model.objects.filter(make_id=make_id).all()
+    return render(request, 'shop/model_dropdown_list_options.html', {'models': models})
+
+def load_variants(request):
+    model_id = request.GET.get('model_id')
+    variants = Variant.objects.filter(model_id=model_id).all()
+    return render(request, 'shop/variant_dropdown_list_options.html', {'variants': variants})
 
 def sendMail(request, form):
     if 'username' in request.session:

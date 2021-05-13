@@ -1,13 +1,5 @@
 from django.urls import path
-from .views import (
-    render_index,
-    UserCreateView,
-    UserLoginView,
-    logout,
-    profile,
-    update,
-    delete
-)
+from .views import *
 
 urlpatterns = [
     path('', render_index, name="index"),
@@ -16,5 +8,7 @@ urlpatterns = [
     path('logout/', logout, name="logout"),
     path('account/', profile, name="profile"),
     path('account/update/', update, name="account-update"),
-    path('account/delete/', delete, name="account-delete")
+    path('account/delete/', delete, name="account-delete"),
+
+    path('load-cities/', load_cities, name='load_cities'),
 ]

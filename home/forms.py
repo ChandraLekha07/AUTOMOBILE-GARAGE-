@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import User
+from .models import User, City
 
 class UserModelForm(forms.ModelForm):
     firstname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control',
@@ -16,13 +16,20 @@ class UserModelForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = [
-            'firstname',
-            'lastname',
-            'email',
-            'password',
-            'mobile'
-        ]
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.none()
+
+        if 'state' in self.data:
+            try:
+                state_id = int(self.data.get('state'))
+                self.fields['city'].queryset = City.objects.filter(state_id=state_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['city'].queryset = self.instance.state.city_set.order_by('name')
 
     def clean_firstname(self):
         firstname = self.cleaned_data.get('firstname')
@@ -110,12 +117,7 @@ class UserUpdateForm(forms.ModelForm):
                                                                           'placeholder': 'Enter your new mobile'}))
     class Meta:
         model = User
-        fields = [
-            'firstname',
-            'lastname',
-            'password',
-            'mobile'
-        ]
+        fields = '__all__'
 
     def clean_firstname(self):
         firstname = self.cleaned_data.get('firstname')

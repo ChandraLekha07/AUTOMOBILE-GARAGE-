@@ -18,7 +18,9 @@
   </li>
 </ul>
 <div style="margin: 25px;">
-  <form method="POST" >
+  <form method="POST" id="sellCarForm" data-cities-url="{% url 'home:load_cities' %}"
+        data-models-url="{% url 'shop:load_models' %}"
+        data-variants-url="{% url 'shop:load_variants' %}">
     {% csrf_token %}
     <div class="container">
       <div class="row justify-content-evenly">
@@ -44,4 +46,52 @@
     </div>
   </form>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_state").change(function () {
+        const url = $("#sellCarForm").attr("data-cities-url");
+        const stateId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'state_id': stateId
+            },
+            success: function (data) {
+                $("#id_city").html(data);
+            }
+        });
+
+    });
+    $("#id_make").change(function () {
+        const url = $("#sellCarForm").attr("data-models-url");
+        const makeId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'make_id': makeId
+            },
+            success: function (data) {
+                $("#id_model").html(data);
+            }
+        });
+
+    });
+    $("#id_model").change(function () {
+        const url = $("#sellCarForm").attr("data-variants-url");
+        const modelId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'model_id': modelId
+            },
+            success: function (data) {
+                $("#id_variant").html(data);
+            }
+        });
+
+    });
+</script>
 {% endblock %}
