@@ -29,7 +29,10 @@
             <div class="col">
               {{ field }}
             </div>
-            <div class="row">
+          </div>
+          <div class="row">
+            <div class="col"></div>
+            <div class="col">
                 <span id="helpText" class="form-text">
                   {% if field.errors %}
                     <div class="help">{{ field.errors }}</div>
@@ -43,8 +46,8 @@
             <label class="form-check-label" for="termsAgree">By creating this account, I understand and agree to
             Our Privacy notice and Terms of Use (required)</label>
           </div>
-          <div class="col">
-              <button type="submit" class="btn btn-outline-secondary">Create account</button>
+          <div class="col" style="text-align: center;margin-top:10px;">
+              <button type="submit" class="primary" style="margin-right:10px;">Create account</button>
               <a href="{% url 'home:login' %}" class="button">Already a user? Login here</a>
           </div>
         </div>

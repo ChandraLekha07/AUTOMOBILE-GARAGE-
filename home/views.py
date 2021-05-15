@@ -5,13 +5,15 @@ from django.contrib import messages
 from django.views import View
 from .models import User
 from .forms import UserModelForm, UserLoginForm, UserViewForm, UserUpdateForm
-
+from models.models import Car
 from .models import User, City
 
 # Create your views here.
 def render_index(request):
     template_name = 'home/index.html'
-    return render(request, template_name)
+    objects = Car.objects.filter().order_by('id')[:3]
+    context={"objects":objects}
+    return render(request, template_name,context)
 
 class UserCreateView(View):
     template_name = 'registration/signup.html'
@@ -61,9 +63,7 @@ class UserLoginView(View):
                 else:
                     request.session['username'] = user_obj.email
                     request.user = user_obj.email
-                    messages.info(request, 'Welcome You are logged in as')
-                    list(messages.get_messages(request))
-                    return render(request, self.success_url)
+                    return redirect('/')
             except User.DoesNotExist:
                 messages.info(request, 'User does not exist with given email')
                 list(messages.get_messages(request))

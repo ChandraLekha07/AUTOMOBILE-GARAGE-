@@ -21,8 +21,12 @@
   </header>
   <nav id="menu">
     <ul class="links">
-              <li class="active"> <a href="/">Home </a> </li>
+      {% block menuhome %}
+              <li> <a href="/">Home </a> </li>
+      {% endblock menuhome %}
+      {% block menunewcars %}
               <li> <a href="{% url 'models:models-home'%}">New Cars</a> </li>
+      {% endblock menunewcars %}
               <li> <a href="{% url 'shop:shop-home'%}">Old Cars</a> </li>
               {% if request.session.username %}
               <li><a href="{% url 'home:profile' %}">Your Profile</a></li>
@@ -42,17 +46,15 @@
     <h1>Welcome to Automobile Garage</h1>
     {% endblock content %}
     {% block footer %}
-    <footer id="footer">
+    <footer id="footer" style="text-align: center;">
       <div class="inner">
         <ul class="icons">
-          <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-          <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-          <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
-          <li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+          <li><a href="https://github.com/iamtariqueanjum/sdp2" class="icon alt fa-github"><span class="label">Github</span></a></li>
+          <li><a href="https://www.linkedin.com/pulse/automobile-business-system-mohammad-tarique-anjum/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
         </ul>
         <ul class="copyright">
-          <li>Copyright © 2021 Company Name - </li>
-          <li>SDP-2 Project Group</li>
+          <li>Copyright © 2021 Company Name - Automobile Garage</li>
+          <li>Skill Development Project-2 Project Group 436</li>
         </ul>
       </div>
     </footer>

@@ -10,10 +10,9 @@
       {% endfor %}
   </div>
 {% endif %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}">
-<div class="content">
-    <div class="form-label">Profile details</div>
+<header class="major">
+  <h2>PROFILE</h2>
+</header>
         {% csrf_token %}
         <div class="container">
           {% for field in form %}
@@ -21,15 +20,18 @@
             <div class="col">
               {{ field.label_tag }}
             </div>
-            <div class="col">
+            <div class="col" style="background-color:#242943;">
               {{ field }}
             </div>
             <div class="row">
+              <div class="col"></div>
+            <div class="col">
                 <span id="helpText" class="form-text">
                   {% if field.errors %}
                     <div class="help">{{ field.errors }}</div>
                   {% endif %}
                 </span>
+                </div>
             </div>
           </div>
           {% endfor %}
@@ -38,5 +40,4 @@
               <a href="{% url 'home:account-delete' %}" class="btn btn-outline-secondary">Delete your account</a>
           </div>
         </div>
-</div>
 {% endblock content %}

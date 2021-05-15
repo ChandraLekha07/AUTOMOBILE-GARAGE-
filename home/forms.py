@@ -95,16 +95,19 @@ class UserLoginForm(forms.Form):
         return password
 
 class UserViewForm(UserModelForm, forms.ModelForm):
-    firstname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                             'readonly':'readonly'}))
-    lastname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                            'readonly':'readonly'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control',
-                                                            'readonly': 'readonly'}))
-    password = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                                'readonly':'readonly'}))
-    mobile = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                          'readonly':'readonly'}))
+    # firstname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control',
+    #                                                                          'readonly':'readonly'}))
+    # lastname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control',
+    #                                                                         'readonly':'readonly'}))
+    # email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control',
+    #                                                         'readonly': 'readonly'}))
+    # password = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control',
+    #                                                                             'readonly':'readonly'}))
+    # mobile = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'class': 'form-control',
+    #                                                                       'readonly':'readonly'}))
+    class Meta:
+        model = User
+        fields = '__all__'
 
 class UserUpdateForm(forms.ModelForm):
     firstname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control',

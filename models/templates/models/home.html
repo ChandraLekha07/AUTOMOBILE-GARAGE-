@@ -3,6 +3,9 @@
     <title>MODELS - AMG</title>
 {% endblock title %}
 {% block content %}
+{% block menunewcars %}
+  <li class="active"> <a href="{% url 'models:models-home'%}">New Cars</a> </li>
+{% endblock menunewcars %}
 <h1 align="center" style="margin-top: 10px;">CAR MODELS</h1>
 <div class="row" style="margin-right: 10px;margin-left:10px;margin-top:10px;margin-bottom:10px;">
   <div class="col">
