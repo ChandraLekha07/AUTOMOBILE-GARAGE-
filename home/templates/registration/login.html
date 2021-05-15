@@ -12,10 +12,9 @@
 </div>
 {% endfor %}
 {% endif %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}">
-<div class="content">
-<div class="form-label">Fill in the details to login to your account</div>
+<header class="major">
+  <h2>LOGIN</h2>
+</header>
     <form method="POST" >
         {% csrf_token %}
         <div class="container">
@@ -38,9 +37,8 @@
           {% endfor %}
           <div class="col">
               <button type="submit" class="btn btn-outline-secondary">Login</button>
-              <a href="{% url 'home:signup' %}" class="btn btn-outline-secondary">New user? Create your account here</a>
+              <a href="{% url 'home:signup' %}" class="button">New user? Create your account here</a>
           </div>
         </div>
     </form>
-</div>
 {% endblock content %}

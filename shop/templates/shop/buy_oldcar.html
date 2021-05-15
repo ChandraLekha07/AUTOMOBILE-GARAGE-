@@ -17,6 +17,76 @@
     <a class="nav-link" href="">DEALER LOCATER</a>
   </li>
 </ul>
+<div class="row" style="margin-right: 10px;margin-left:10px;margin-top:10px;margin-bottom:10px">
+  <div class="col">
+    <div class="card card-body" style="background-color: #242943;">
+      <form method="post" align="center" id="filterForm"
+            data-models-url="{% url 'shop:load_models' %}"
+            data-variants-url="{% url 'shop:load_variants' %}">
+        {% csrf_token %}
+        {{myFilter.form}}
+        <button class="btn btn-primary" type="submit">
+          Search
+        </button>
+      </form>
+      <br>
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script>
+          $("#id_make").change(function () {
+              const url = $("#filterForm").attr("data-models-url");
+              const makeId = $(this).val();
 
-
-{% endblock %}
+              $.ajax({
+                  url: url,
+                  data: {
+                      'make_id': makeId
+                  },
+                  success: function (data) {
+                      $("#id_model").html(data);
+                  }
+              });
+            });
+            $("#id_model").change(function () {
+                const url = $("#filterForm").attr("data-variants-url");
+                const modelId = $(this).val();
+  
+                $.ajax({
+                    url: url,
+                    data: {
+                        'model_id': modelId
+                    },
+                    success: function (data) {
+                        $("#id_variant").html(data);
+                    }
+                });
+  
+            });
+        </script>
+        {% for object in page.object_list%}
+        {% if forloop.counter0|divisibleby:4 %} <div class="row"> {% endif %}
+        <div class="col d-flex justify-content-center" style="text-align:center;">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="{{object.car_main_Img.url}}" alt="Card image cap">
+          <div class="card-body" style="color: black;">
+            <h5 class="card-title" style="color: black;">{{object.make}} {{object.name}}</h5>
+            <p class="card-text" style="color: black;">{{object.variant}}</p>
+            <a href="#" class="btn btn-primary">KNOW MORE</a>
+          </div>
+        </div>
+        </div>
+        {%  if forloop.counter|divisibleby:4 or forloop.last %}</div><br>{%  endif %}
+        {% endfor %}
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            {% if page.has_previous %}
+            <li class="page-item"><a class="page-link" href="{% url 'shop:shop-buy' %}?page={{page.previous_page_number}}">Previous</a></li>
+            {% endif %}
+            {% if page.has_next%}
+            <li class="page-item"><a class="page-link" href="{% url 'shop:shop-buy' %}?page={{page.next_page_number}}">Next</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

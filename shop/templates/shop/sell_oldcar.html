@@ -3,7 +3,7 @@
     <title>Sell old car</title>
 {% endblock title %}
 {% block content %}
-<ul class="nav nav-pills justify-content-center">
+<ul class="nav nav-pills justify-content-center" >
   <li class="nav-item">
     <a class="nav-link" href="{% url 'shop:shop-buy' %}">BUY CAR</a>
   </li>
@@ -17,8 +17,8 @@
     <a class="nav-link" href="#">DEALER LOCATER</a>
   </li>
 </ul>
-<div style="margin: 25px;">
-  <form method="POST" id="sellCarForm" data-cities-url="{% url 'home:load_cities' %}"
+<div style="margin: 25px;" >
+  <form method="POST" enctype="multipart/form-data" id="sellCarForm" data-cities-url="{% url 'home:load_cities' %}"
         data-models-url="{% url 'shop:load_models' %}"
         data-variants-url="{% url 'shop:load_variants' %}">
     {% csrf_token %}

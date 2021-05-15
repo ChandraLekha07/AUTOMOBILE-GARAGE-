@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect
 
 from django.views import View
 
-from .forms import SellCarModelForm
+from .forms import SellCarModelForm, ExchangeCarModelForm
 
 from models.models import Make, Model, Variant
+from .models import SellCar
+from .filters import ShopCarFilter
+from django.core.paginator import Paginator
 
 import smtplib, ssl
 
@@ -61,7 +64,7 @@ def sendMail(request, form):
         port = 465
         fullname = form.cleaned_data['fullname']
         make = form.cleaned_data['make']
-        name = form.cleaned_data['name']
+        model = form.cleaned_data['model']
         variant = form.cleaned_data['variant']
         expectedprice = form.cleaned_data['expectedprice']
         receiver = form.cleaned_data['email']
@@ -69,9 +72,9 @@ def sendMail(request, form):
         print(receiver)
         sent_subject = "AMG - Your Care Sale is online"
         sent_body = ("Hello, Mr."+ fullname + " Your automobile sale request for\n"
-                     "Make: " + make + "\n"
-                     "Model: " + name + "\n"
-                     "Variant: " + variant + "\n"
+                    "Make: " + str(make) + "\n"
+                    "Model: " + str(model) + "\n"
+                    "Variant: " + str(variant) + "\n"
                      "is BOOKED for an initial price of "+ str(expectedprice) +"\n"
                      "Contact dealer for more updates\n"
                      "Team AMG")
@@ -94,11 +97,46 @@ def sendMail(request, form):
 def render_buy(request):
     template_name = 'shop/buy_oldcar.html'
     if 'username' in request.session:
+        if request.method == 'GET':
+            objects = SellCar.objects.all()
+            myFilter = ShopCarFilter(request.POST, queryset=objects)
+            objects = myFilter.qs
+            page_num = request.GET.get('page')
+            models_paginator = Paginator(objects, 8)
+            page = models_paginator.get_page(page_num)
+            context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
+            return render(request, template_name, context)
+        if request.method == 'POST':
+            objects = SellCar.objects.all()
+            myFilter = ShopCarFilter(request.POST, queryset=objects)
+            objects = myFilter.qs
+            page_num = request.GET.get('page')
+            models_paginator = Paginator(objects, 8)
+            page = models_paginator.get_page(page_num)
+            context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
+            return render(request, template_name, context)
         return render(request, template_name)
     return redirect('/login')
-
-def render_exchange(request):
+class ExchangeCreateView(View):
     template_name = 'shop/exchange_car.html'
-    if 'username' in request.session:
-        return render(request, template_name)
-    return redirect('/login')
+    success_url = 'shop/exchange_success.html'
+
+    def get(self, request, *args, **kwargs):
+        if 'username' in request.session:
+            form = ExchangeCarModelForm()
+            context = {"form": form}
+            return render(request, self.template_name, context)
+        return redirect('/login')
+
+    def post(self, request, *args, **kwargs):
+        if 'username' in request.session:
+            form = ExchangeCarModelForm(request.POST, request.FILES)
+            context = {"form": form}
+            if form.is_valid():
+                form.save()
+                # sendMail(request, form)
+                form = ExchangeCarModelForm()
+                context = {"form": form}
+                return render(request, self.success_url, context)
+            return render(request, self.template_name, context)
+        return redirect('/login')

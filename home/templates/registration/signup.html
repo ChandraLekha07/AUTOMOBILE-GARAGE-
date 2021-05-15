@@ -15,10 +15,9 @@
         <p class="mb-0">You can <a href="{% url 'home:login' %}" class="alert-link">Login to your account</a> successfully now</p>
     </div>
 {% endif %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}">
-<div class="content">
-    <div class="form-label">Fill in the details to create an account</div>
+<header class="major">
+  <h2>SIGNUP</h2>
+</header>
     <form method="POST" id="personForm" data-cities-url="{% url 'home:load_cities' %}">
         {% csrf_token %}
         <div class="container">
@@ -46,11 +45,10 @@
           </div>
           <div class="col">
               <button type="submit" class="btn btn-outline-secondary">Create account</button>
-              <a href="{% url 'home:login' %}" class="btn btn-outline-secondary">Already a user? Login here</a>
+              <a href="{% url 'home:login' %}" class="button">Already a user? Login here</a>
           </div>
         </div>
     </form>
-</div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     $("#id_state").change(function () {

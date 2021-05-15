@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Car
 from .filters import CarFilter
@@ -28,3 +28,10 @@ def models_home(request):
         context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
         return render(request, template_name, context)
     return render(request, template_name)
+
+def detail(request,id):
+    template_name = 'models/details.html'
+    if request.method == 'GET':
+        car=get_object_or_404(Car,id=id)
+        context={'car':car}
+        return render(request,template_name,context)

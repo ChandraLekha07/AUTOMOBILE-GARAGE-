@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'home',
     'models',
     'shop',
-    'services',
     'django_filters',
 ]
 

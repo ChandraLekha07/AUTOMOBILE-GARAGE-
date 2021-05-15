@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import *
 
 # Create your models here.
 
@@ -32,7 +32,7 @@ class Car(models.Model):
     def __str__(self):
         return self.make.name+' '+self.model.name+' '+self.variant.name
 
-    image = models.ImageField(upload_to='', blank=True)
+    image = models.ImageField(upload_to='newcars/', blank=True)
     description = models.TextField()
 
     def remove_on_image_update(self):
@@ -50,3 +50,6 @@ class Car(models.Model):
     def save(self, *args, **kwargs):
         self.remove_on_image_update()
         return super(Car, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("models:models-detail", kwargs={"id":self.id})
