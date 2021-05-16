@@ -3,4 +3,109 @@
     <title>MODEL DETAILS - AMG</title>
 {% endblock title %}
 {% block content %}
+<div id="main" class="alt">
+    <!-- One -->
+        <section id="one">
+            <div class="inner">
+                <header class="major">
+                    <h1>{{car.make}} {{car.variant}}</h1>
+                </header>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="{{car.image.url}}" class="img-responsive" alt="">
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-6"><img src="images/product-1-720x480.jpg" class="img-responsive" alt=""></div>
+                            <div class="col-md-4 col-xs-6"><img src="images/product-2-720x480.jpg" class="img-responsive" alt=""></div>
+                            <div class="col-md-4 col-xs-6"><img src="images/product-3-720x480.jpg" class="img-responsive" alt=""></div>
+
+                            <div class="col-md-4 col-xs-6"><img src="images/product-4-720x480.jpg" class="img-responsive" alt=""></div>
+                            <div class="col-md-4 col-xs-6"><img src="images/product-5-720x480.jpg" class="img-responsive" alt=""></div>
+                            <div class="col-md-4 col-xs-6"><img src="images/product-6-720x480.jpg" class="img-responsive" alt=""></div>
+                        </div>
+                        <br>
+                        <h2>Ex-Showroom Price :{{car.price}}</h2>
+                    </div>
+                </div>
+                <br>
+                <form action="#">
+                    <div class="fields">
+                        <div class="field quarter">
+                            <label>Type</label>
+                            <input type="text" readonly value="New vehicle">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Make</label>
+                            <input type="text" readonly value="{{car.make}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Model</label>
+                            <input type="text" readonly value="{{car.model}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Manufacture Year</label>
+                            <input type="text" readonly value="{{car.year}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Mileage</label>
+                            <input type="text" readonly value="{{car.mileage}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Fuel</label>
+                            <input type="text" readonly value="{{car.fuel}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Engine size</label>
+                            <input type="text" readonly value="{{car.engine_size}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Power</label>
+                            <input type="text" readonly value="{{car.power}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Gearbox</label>
+                            <input type="text" readonly value="{{car.gear_box}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Number of seats</label>
+                            <input type="text" readonly value="{{car.seats}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Doors</label>
+                            <input type="text" readonly value="{{car.doors}}">
+                        </div>
+
+                        <div class="field quarter">
+                            <label>Color</label>
+                            <input type="text" readonly value="{{car.colors}}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <div class="inner">
+            <section>
+                <header class="major">
+                    <h2>Vehicle Description</h2>
+                </header>
+                <p>{{car.description}}</p>
+            </section>
+        </div>
+</div>
+<form align="center">
+<button class="primary" style="margin-top: 20px;">BOOK NOW</button>
+</form>
 {% endblock content%}

@@ -22,24 +22,42 @@
   <nav id="menu">
     <ul class="links">
       {% block menuhome %}
-              <li> <a href="/">Home </a> </li>
+      <li> <a href="/">Home </a> </li>
       {% endblock menuhome %}
       {% block menunewcars %}
-              <li> <a href="{% url 'models:models-home'%}">New Cars</a> </li>
+      <li> <a href="{% url 'models:models-home'%}">New Cars</a> </li>
       {% endblock menunewcars %}
-              <li> <a href="{% url 'shop:shop-home'%}">Old Cars</a> </li>
-              {% if request.session.username %}
-              <li><a href="{% url 'home:profile' %}">Your Profile</a></li>
-              <li><a href="{% url 'shop:shop-home' %}">Your orders</a></li>
-              <li><a href="{% url 'home:profile' %}">Dashboard</a></li>
-              <li><a href="{% url 'home:logout' %}">Logout</a></li>
-              {% else %}
-              {% block navbarprofile %}
-              <li><a href="/login">Login</a></li>
-              {% endblock navbarprofile %}
-              {% endif %}
-              <li><a href="#">Contact Us</a></li>
-          </ul>
+      {% block menuoldcars %}
+      <li> <a href="{% url 'shop:shop-home'%}">Old Cars</a> </li>
+      {% endblock menuoldcars %}
+      {% if request.session.username %}
+      {% block menuyourprofile%}
+      <li><a href="{% url 'home:profile' %}">Your Profile</a></li>
+      {% endblock menuyourprofile%}
+      {% block menuyourorder%}
+      <li><a href="{% url 'shop:shop-home' %}">Your orders</a></li>
+      {% endblock menuyourorder%}
+      {% block menuyoursales%}
+      <li><a href="#">Your Sales</a></li>
+      {% endblock menuyoursales%}
+      {% block menudashboard%}
+      <li><a href="#">Dashboard</a></li>
+      {% endblock menudashboard%}
+      <li><a href="{% url 'home:logout' %}">Logout</a></li>
+      {% else %}
+      {% block navbarprofile %}
+      {% block menulogin %}
+      <li><a href="/login">Login</a></li>
+      {% endblock menulogin %}
+      {% endblock navbarprofile %}
+      {% endif %}
+      {% block menuteam%}
+      <li><a href="#">Team</a></li>
+      {% endblock menuteam%}
+      {% block menucontact%}
+      <li><a href="#">Contact Us</a></li>
+      {% endblock menucontact%}
+      </ul>
   </nav>
     {% endblock navbar %}
     {% block content %}

@@ -2,14 +2,14 @@
 {% block title %}
   <title>Home - AMG</title>
 {% endblock title %}
-{% block content %}
 {% block menuhome %}
-        <li class="active"> <a href="/">Home </a> </li>
+<li class="active"> <a href="/">Home </a> </li>
 {% endblock menuhome %}
+{% block content %}
       <section id="banner" class="major" style="background-image: url('static/images/banner-image-1-1920x700.jpg');">
         <div class="inner">
           <header class="major">
-            <h1>What to buy a New Car?</h1>
+            <h1>Want to buy a New Car?</h1>
           </header>
           <div class="content">
             <p> Search new model cars in all brands and variants</p>
@@ -20,7 +20,6 @@
         </div>
       </section>
       <div id="main">
-							
         <!-- Featured Cars -->
         <section class="tiles">
           {% for object in objects%}
@@ -28,24 +27,18 @@
             <span class="image">
               <img src="{{object.image.url}}" alt="" />
             </span>
-
             <header class="major">
               <p>
-                <i class="fa fa-dashboard"></i> 130 000km &nbsp;&nbsp;
-                <i class="fa fa-cube"></i> 1800cc&nbsp;&nbsp;
-                <i class="fa fa-cog"></i> Manual
+                <i class="fa fa-dashboard"></i> {{object.mileage}}&nbsp;&nbsp;
+                <i class="fa fa-cube"></i> {{object.engine_size}}&nbsp;&nbsp;
+                <i class="fa fa-cog"></i> {{object.gear_box}}
               </p>
-
-              <h3>Lorem ipsum dolor sit amet, consectetur</h3>
-
-              <p><del>$11199.00</del> <strong> $11179.00</strong></p>
-
-              <p>190 hp  /  Petrol  /  2008  /  Used vehicle</p>
-
-              
-
+              <h3>{{object.make}}</h3>
+              <h4>{{object.model}}</h4>
+              <p><strong> {{object.price}}</strong></p>
+              <p>{{object.power}}  /  {{object.fuel}}  /  {{object.year}}</p>
               <div class="major-actions">
-                <a href="#" class="button small next">View Car</a>
+                <a href="{% url 'models:models-detail' object.id %}" class="button small next">View Car</a>
               </div>
             </header>
           </article>
@@ -69,7 +62,7 @@
         <section class="tiles">
           <article>
             <span class="image">
-              <img src="images/blog-1-720x480.jpg" alt="" />
+              <img src="/static/images/blog-1-720x480.jpg" alt="" />
             </span>
             <header class="major">
               <h3>BUY</h3>
@@ -83,7 +76,7 @@
           </article>
           <article>
             <span class="image">
-              <img src="images/blog-2-720x480.jpg" alt="" />
+              <img src="/static/images/blog-2-720x480.jpg" alt="" />
             </span>
             <header class="major">
               <h3>SELL</h3>
@@ -97,7 +90,7 @@
           </article>
           <article>
             <span class="image">
-              <img src="images/blog-3-720x480.jpg" alt="" />
+              <img src="/static/images/blog-3-720x480.jpg" alt="" />
             </span>
             <header class="major">
               <h3>EXCHANGE</h3>
@@ -105,10 +98,32 @@
               <p>Exchange your car with your favourite new model</p>
 
               <div class="major-actions">
-                <a href="{% url 'shop:shop-exchange' %}" class="button small next scrolly">EXCHANGE CAR</a>
+                <a href="#" class="button small next scrolly">EXCHANGE CAR</a>
               </div>
             </header>
           </article>
+        </section>
+        <section>
+          <div class="inner">
+            <header class="major">
+              <h2>Testimonials</h2>
+            </header>
+            <div class="row">
+              <div class="col-6">
+                <p><em>"Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt."</em></p>
+                <p><strong>- John Doe</strong></p>
+                
+              </div>
+
+              <div class="col-6">
+                <p><em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores temporibus dolorum minus repudiandae, eaque error corporis aliquam, architecto amet itaque nobis. Omnis itaque est dolore, a nostrum numquam. Quae, facilis."</em></p>
+                <p><strong>- Jack Smith</strong></p>
+              </div>
+            </div>
+            <ul class="actions">
+              <li><a href="testimonials.html" class="button next">Read more</a></li>
+            </ul>
+          </div>
         </section>
     </div>
 {% endblock content %}

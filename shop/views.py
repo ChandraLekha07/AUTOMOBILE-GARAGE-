@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from django.views import View
 
-from .forms import SellCarModelForm, ExchangeCarModelForm
+from .forms import SellCarModelForm
 
 from models.models import Make, Model, Variant
 from .models import SellCar
@@ -117,26 +117,3 @@ def render_buy(request):
             return render(request, template_name, context)
         return render(request, template_name)
     return redirect('/login')
-class ExchangeCreateView(View):
-    template_name = 'shop/exchange_car.html'
-    success_url = 'shop/exchange_success.html'
-
-    def get(self, request, *args, **kwargs):
-        if 'username' in request.session:
-            form = ExchangeCarModelForm()
-            context = {"form": form}
-            return render(request, self.template_name, context)
-        return redirect('/login')
-
-    def post(self, request, *args, **kwargs):
-        if 'username' in request.session:
-            form = ExchangeCarModelForm(request.POST, request.FILES)
-            context = {"form": form}
-            if form.is_valid():
-                form.save()
-                # sendMail(request, form)
-                form = ExchangeCarModelForm()
-                context = {"form": form}
-                return render(request, self.success_url, context)
-            return render(request, self.template_name, context)
-        return redirect('/login')

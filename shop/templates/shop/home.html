@@ -2,6 +2,9 @@
 {% block title %}
     <title>SHOP - AMG</title>
 {% endblock title %}
+{% block menuoldcars %}
+<li class="active"> <a href="{% url 'shop:shop-home'%}">Old Cars</a> </li>
+{% endblock menuoldcars %}
 {% block content %}
 <ul class="nav nav-pills justify-content-center">
   <li class="nav-item">
@@ -9,12 +12,6 @@
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{% url 'shop:shop-sell' %}">SELL CAR</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'shop:shop-exchange' %}">EXCHANGE CAR</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="">DEALER LOCATER</a>
   </li>
 </ul>
 {% endblock content %}
