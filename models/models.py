@@ -1,28 +1,41 @@
 from django.db import models
 from django.urls import *
 
+
 # Create your models here.
 
 class Make(models.Model):
     name = models.CharField(max_length=40)
 
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self):
         return self.name
+
 
 class Model(models.Model):
     make = models.ForeignKey(Make, on_delete=models.CASCADE)
     name = models.CharField(max_length=40)
 
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self):
         return self.name
+
 
 class Variant(models.Model):
     make = models.ForeignKey(Make, on_delete=models.CASCADE)
     model = models.ForeignKey(Model, on_delete=models.CASCADE)
     name = models.CharField(max_length=40)
 
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self):
-        return self.model.name+' '+self.name
+        return self.model.name + ' ' + self.name
+
 
 class Car(models.Model):
     make = models.ForeignKey(Make, on_delete=models.SET_NULL, blank=True, null=True)
@@ -31,16 +44,16 @@ class Car(models.Model):
 
     image = models.ImageField(upload_to='newcars/', blank=True)
     description = models.TextField()
-    year=models.CharField(max_length=4,blank=True, null=True)
-    mileage=models.CharField(max_length=20,blank=True, null=True)
-    fuel=models.CharField(max_length=20,blank=True, null=True)
-    engine_size=models.CharField(max_length=20,blank=True, null=True)
-    power=models.CharField(max_length=20,blank=True, null=True)
-    gear_box=models.CharField(max_length=20,blank=True, null=True)
-    seats=models.CharField(max_length=20,blank=True, null=True)
-    doors=models.CharField(max_length=20,blank=True, null=True)
-    colors=models.CharField(max_length=100,blank=True, null=True)
-    price=models.CharField(max_length=100,blank=True, null=True)
+    year = models.CharField(max_length=4, blank=True, null=True)
+    mileage = models.CharField(max_length=20, blank=True, null=True)
+    fuel = models.CharField(max_length=20, blank=True, null=True)
+    engine_size = models.CharField(max_length=20, blank=True, null=True)
+    power = models.CharField(max_length=20, blank=True, null=True)
+    gear_box = models.CharField(max_length=20, blank=True, null=True)
+    seats = models.CharField(max_length=20, blank=True, null=True)
+    doors = models.CharField(max_length=20, blank=True, null=True)
+    colors = models.CharField(max_length=100, blank=True, null=True)
+    price = models.CharField(max_length=100, blank=True, null=True)
 
     def remove_on_image_update(self):
         try:
@@ -59,7 +72,7 @@ class Car(models.Model):
         return super(Car, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("models:models-detail", kwargs={"id":self.id})
-    
+        return reverse("models:models-detail", kwargs={"id": self.id})
+
     def __str__(self):
-        return self.make.name+' '+self.model.name+' '+self.variant.name
+        return self.make.name + ' ' + self.model.name + ' ' + self.variant.name

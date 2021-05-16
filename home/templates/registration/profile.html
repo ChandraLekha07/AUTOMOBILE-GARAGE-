@@ -2,6 +2,9 @@
 {% block title %}
   <title>Your profile</title>
 {% endblock title %}
+{% block menuyourprofile%}
+  <li class="active"><a href="{% url 'home:profile' %}">Your Profile</a></li>
+{% endblock menuyourprofile%}
 {% block content %}
 {% if messages %}
   <div class="alert alert-success" role="alert">

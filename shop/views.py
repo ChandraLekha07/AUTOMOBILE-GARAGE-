@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.views import View
 
@@ -117,3 +117,10 @@ def render_buy(request):
             return render(request, template_name, context)
         return render(request, template_name)
     return redirect('/login')
+
+def product_detail(request,id):
+    template_name = 'shop/details.html'
+    if request.method == 'GET':
+        car = get_object_or_404(SellCar,id=id)
+        context = {'car':car}
+        return render(request, template_name, context)

@@ -15,10 +15,10 @@ class SellCarModelForm(forms.ModelForm):
                                                                               'placeholder': 'Enter year vehicle was bought'}))
     kilometer = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control',
                                                                               'placeholder': 'Enter kilometers vehicle travelled'}))
-    regno = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control',
+    reg_no = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control',
                                                                               'placeholder': 'Enter your vehicle registration id'}))
-    expectedprice = forms.CharField(max_length= 10, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                              'placeholder': 'Enter expected price (in number)'}))
+    price = forms.CharField(max_length= 10, widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                              'placeholder': 'Enter price (in number)'}))
 
     class Meta:
         model = SellCar
@@ -88,21 +88,21 @@ class SellCarModelForm(forms.ModelForm):
             raise forms.ValidationError("Length cannot be negative")
         return kilometer
 
-    def clean_regno(self):
-        regno = int(self.cleaned_data.get('regno'))
-        if len(str(regno)) < 5:
+    def clean_reg_no(self):
+        reg_no = int(self.cleaned_data.get('reg_no'))
+        if len(str(reg_no)) < 5:
             raise forms.ValidationError("Cannot be less than 5 digits")
-        if regno<0:
+        if reg_no<0:
             raise forms.ValidationError("Registration number cannot be negative")
         for instance in SellCar.objects.all():
-            if instance.regno == regno:
-                raise forms.ValidationError('This car with regno '+str(regno)+' is already on sale!')
-        return regno
+            if instance.reg_no == reg_no:
+                raise forms.ValidationError('This car with reg_no '+str(reg_no)+' is already on sale!')
+        return reg_no
 
-    def clean_expectedprice(self):
-        expectedprice = float(self.cleaned_data.get('expectedprice'))
-        if len(str(expectedprice)) < 5:
+    def clean_price(self):
+        price = float(self.cleaned_data.get('price'))
+        if len(str(price)) < 5:
             raise forms.ValidationError("Cannot be less than 5 digits")
-        if expectedprice<0:
+        if price<0:
             raise forms.ValidationError("Price cannot be negative")
-        return expectedprice
+        return price

@@ -6,12 +6,18 @@ from django.db import models
 class State(models.Model):
     name = models.CharField(max_length=40)
 
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self):
         return self.name
 
 class City(models.Model):
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     name = models.CharField(max_length=40)
+
+    class Meta:
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
@@ -35,6 +41,9 @@ class Dealer(models.Model):
     state = models.ForeignKey(State, on_delete=models.SET_NULL, blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True)
     address = models.TextField()
-    
+
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self):
         return self.name
