@@ -4,16 +4,26 @@ from django.contrib import messages
 
 from django.views import View
 from .models import User
-from .forms import UserModelForm, UserLoginForm, UserViewForm, UserUpdateForm, DealerModelForm
+from .forms import UserModelForm, UserLoginForm, UserViewForm, UserUpdateForm, DealerModelForm, MessagesModelForm
 from models.models import Car
 from .models import User, City
 
 # Create your views here.
 def render_index(request):
     template_name = 'home/index.html'
-    objects = Car.objects.filter().order_by('id')[:3]
-    context={"objects":objects}
-    return render(request, template_name,context)
+    if request.method == 'GET':
+        objects = Car.objects.filter().order_by('id')[:3]
+        context={"objects":objects}
+        return render(request, template_name,context)
+
+    if request.method == 'POST':
+        form = MessagesModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, 'We will reply your query very soon')
+            list(messages.get_messages(request))
+            return render(request, template_name)
+
 
 class UserCreateView(View):
     template_name = 'registration/signup.html'

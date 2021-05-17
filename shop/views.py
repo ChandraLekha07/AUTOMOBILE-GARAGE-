@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from django.views import View
+from django.views.generic.base import TemplateResponseMixin
 
-from .forms import SellCarModelForm
+from .forms import SellCarModelForm, BuyCarModelForm
 from django.contrib import messages
+from home.models import User
 from models.models import Make, Model, Variant
-from .models import SellCar
+from .models import BuyCar, SellCar
 from .filters import ShopCarFilter
 from django.core.paginator import Paginator
 
@@ -21,7 +23,6 @@ def render_shop(request):
 
 class SellCreateView(View):
     template_name = 'shop/sell_oldcar.html'
-    success_url = 'shop/sell_success.html'
 
     def get(self, request, *args, **kwargs):
         if 'username' in request.session:
@@ -36,9 +37,12 @@ class SellCreateView(View):
             context = {"form": form}
             if form.is_valid():
                 form.save()
-                sendMail(request, form)
+                mailSeller(request, form)
+                form = SellCarModelForm()
+                context = {"form": form}
                 messages.info(request, 'Your product is online Check your gmail for more info')
                 list(messages.get_messages(request))
+                return render(request, self.template_name, context)
             return render(request, self.template_name, context)
         return redirect('/login')
 
@@ -52,7 +56,7 @@ def load_variants(request):
     variants = Variant.objects.filter(model_id=model_id).all()
     return render(request, 'shop/variant_dropdown_list_options.html', {'variants': variants})
 
-def sendMail(request, form):
+def mailSeller(request, form):
     if 'username' in request.session:
         sender = "",
         password = ""
@@ -69,21 +73,17 @@ def sendMail(request, form):
         receiver = form.cleaned_data['email']
         print(sender, password)
         print(receiver)
-        sent_subject = "AMG - Your Care Sale is online"
-        sent_body = ("Hello, Mr."+ fullname + " Your automobile sale request for\n"
+        sent_body = ("Hello, Mr./Ms."+ fullname + " Your automobile sale is live \n"
                     "Make: " + str(make) + "\n"
                     "Model: " + str(model) + "\n"
                     "Variant: " + str(variant) + "\n"
-                     "is BOOKED for an initial price of "+ str(price) +"\n"
-                     "Contact dealer for more updates\n"
+                     "Price: "+ str(price) +"\n"+"\n"
+                     "Contact us for queries\n"
                      "Team AMG")
-        email_text = """\
-                From: %s
-                To: %s
-                Subject: %s
+        email_text = """\From: %s
 
                 %s
-                """ % (sender, " ".join(receiver), sent_subject, sent_body)
+                """ % (sender,  sent_body)
         context = ssl.create_default_context()
         print("Starting to send")
         with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
@@ -97,7 +97,7 @@ def render_buy(request):
     template_name = 'shop/buy_oldcar.html'
     if 'username' in request.session:
         if request.method == 'GET':
-            objects = SellCar.objects.all()
+            objects = SellCar.objects.filter(status='True')
             myFilter = ShopCarFilter(request.POST, queryset=objects)
             objects = myFilter.qs
             page_num = request.GET.get('page')
@@ -106,7 +106,7 @@ def render_buy(request):
             context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
             return render(request, template_name, context)
         if request.method == 'POST':
-            objects = SellCar.objects.all()
+            objects = SellCar.objects.filter(status='True')
             myFilter = ShopCarFilter(request.POST, queryset=objects)
             objects = myFilter.qs
             page_num = request.GET.get('page')
@@ -123,3 +123,51 @@ def product_detail(request,id):
         car = get_object_or_404(SellCar,id=id)
         context = {'car':car}
         return render(request, template_name, context)
+    if request.method == 'POST':
+        if 'username' in request.session:
+            car = get_object_or_404(SellCar, id=id)
+            user = User.objects.get(email=request.session.get('username'))
+            form = BuyCarModelForm(request.POST)
+            context = {}
+            context['car'] = car
+            context['user'] = user
+            if form.is_valid():
+                att = form.save(commit=False)
+                att.car = context['car']
+                att.user = context['user']
+                car.status = False
+                car.save()
+                form.save()
+                messages.info(request, 'You have ordered this car')
+                list(messages.get_messages(request))
+            return render(request,template_name)
+        return render('/login')
+
+def your_sales(request):
+    template_name='shop/sales.html'
+    if 'username' in request.session:
+        if request.method == 'GET':
+            sales = SellCar.objects.filter(email=request.session.get('username'))
+            myFilter = ShopCarFilter(request.POST, queryset=sales)
+            objects = myFilter.qs
+            page_num = request.GET.get('page')
+            models_paginator = Paginator(objects, 6)
+            page = models_paginator.get_page(page_num)
+            context = {"objects":objects,'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
+            return render(request, template_name, context)
+        return render(request, template_name)
+    return redirect('/login')
+
+def your_orders(request):
+    template_name='shop/orders.html'
+    if 'username' in request.session:
+        if request.method == 'GET':
+            user = User.objects.get(email=request.session.get('username'))
+            objects = BuyCar.objects.filter(user=user)
+            page_num = request.GET.get('page')
+            models_paginator = Paginator(objects, 6)
+            page = models_paginator.get_page(page_num)
+            context = {"objects":objects, 'count': models_paginator.count, 'page': page}
+            return render(request, template_name, context)
+        return render(request, template_name)
+    return redirect('/login')

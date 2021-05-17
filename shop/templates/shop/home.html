@@ -37,7 +37,7 @@
   </article>
   <article>
     <span class="image">
-      <img src="/static/images/blog-3-720x480.jpg" alt="stockimg" />
+      <img src="/static/images/browse.jpeg" alt="stockimg" />
     </span>
     <header class="major">
       <h3>BROWSE</h3>
@@ -51,7 +51,7 @@
   </article>
   <article>
     <span class="image">
-      <img src="/static/images/blog-1-720x480.jpg" alt="stockimg" />
+      <img src="/static/images/1016-hero.jpg" alt="stockimg" />
     </span>
     <header class="major">
       <h3>ORDERS</h3>
@@ -59,13 +59,13 @@
       <p>Check your previous orders</p>
 
       <div class="major-actions">
-        <a href="#" class="button small next scrolly">GO TO ORDERS</a>
+        <a href="{% url 'shop:shop-orders' %}" class="button small next scrolly">GO TO ORDERS</a>
       </div>
     </header>
   </article>
   <article>
     <span class="image">
-      <img src="/static/images/blog-2-720x480.jpg" alt="stockimg" />
+      <img src="/static/images/car-sales.jpg" alt="stockimg" />
     </span>
     <header class="major">
       <h3>SALES</h3>
@@ -73,13 +73,13 @@
       <p>Check status of your sales</p>
 
       <div class="major-actions">
-        <a href="#" class="button small next scrolly">GO TO SALES</a>
+        <a href="{% url 'shop:shop-sales' %}" class="button small next scrolly">GO TO SALES</a>
       </div>
     </header>
   </article>
   <article>
     <span class="image">
-      <img src="/static/images/blog-3-720x480.jpg" alt="stockimg" />
+      <img src="/static/images/dashboard.jpg" alt="stockimg" />
     </span>
     <header class="major">
       <h3>DASHBOARD</h3>

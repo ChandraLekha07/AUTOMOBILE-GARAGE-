@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import *
-from home.models import Dealer
+from home.models import User, Dealer
 
 # Create your models here.
 
@@ -80,3 +80,8 @@ class Car(models.Model):
 
     def __str__(self):
         return self.make.name + ' ' + self.model.name + ' ' + self.variant.name
+
+class Deals(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.SET_NULL, blank=True, null=True)
+    dealer = models.ForeignKey(Dealer, on_delete=models.SET_NULL, blank=True, null=True)
+    buyer = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)

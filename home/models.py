@@ -32,7 +32,7 @@ class User(models.Model):
     city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
-        return self.firstname+' '+self.lastname
+        return self.firstname+' '+self.lastname+' '+self.email
 
 class Dealer(models.Model):
     name = models.CharField(max_length=40)
@@ -47,3 +47,9 @@ class Dealer(models.Model):
 
     def __str__(self):
         return self.name+' '+str(self.state)+' '+str(self.city)+' '+self.address
+
+class Messages(models.Model):
+    name = models.CharField(max_length=40)
+    email = models.EmailField(blank=False)
+    subject = models.CharField(max_length=100)
+    message = models.TextField()

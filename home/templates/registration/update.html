@@ -3,10 +3,10 @@
   <title>Update your profile</title>
 {% endblock title %}
 {% block content %}
-<header class="major">
+<header class="major" style="margin-left:43%;">
   <h2>UPDATE PROFILE</h2>
 </header>
-  <form method="POST" id="personForm" data-cities-url="{% url 'home:load_cities' %}">
+  <form method="POST" id="personForm" data-cities-url="{% url 'home:load_cities' %}" style="margin-left: 15%;">
         {% csrf_token %}
         <div class="container fields">
           {% for field in form %}

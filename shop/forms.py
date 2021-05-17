@@ -3,7 +3,7 @@ from django import forms
 from home.models import User, City
 from models.models import Model, Variant
 
-from .models import SellCar
+from .models import SellCar, BuyCar
 
 class SellCarModelForm(forms.ModelForm):
     fullname = forms.CharField(max_length= 100, widget=forms.TextInput())
@@ -17,6 +17,7 @@ class SellCarModelForm(forms.ModelForm):
     class Meta:
         model = SellCar
         fields = '__all__'
+        exclude = ('status',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -69,6 +70,14 @@ class SellCarModelForm(forms.ModelForm):
         if not account:
             raise forms.ValidationError("An account doesn't exist with the given email")
         return email
+    
+    def clean_mobile(self):
+        mobile = self.cleaned_data.get('mobile')
+        if not mobile.isnumeric():
+            raise forms.ValidationError("Mobile number should be a number")
+        if len(mobile)<10:
+            raise forms.ValidationError("Mobile cannot be less than 10-digits")
+        return mobile
 
     def clean_year(self):
         year = int(self.cleaned_data.get('year'))
@@ -92,3 +101,8 @@ class SellCarModelForm(forms.ModelForm):
             if instance.reg_no == reg_no:
                 raise forms.ValidationError('This car with reg_no '+str(reg_no)+' is already on sale!')
         return reg_no
+        
+class BuyCarModelForm(forms.ModelForm):
+    class Meta:
+        model = BuyCar
+        fields = '__all__'

@@ -2,7 +2,8 @@
 {% block title %}
     <title>Buy a verified old car</title>
 {% endblock title %}
-{% block content %}<div id="main" class="alt">
+{% block content %}
+<div id="main" class="alt">
 
   <!-- One -->
     <section id="one">
@@ -38,9 +39,9 @@
         </form>
       </div>
     </section>
-    {% for object in page.object_list%}
     <section class="tiles">
-      {% if forloop.counter0|divisibleby:3 %}<article>{%  endif %}
+      {% for object in page.object_list%}
+      <article>
         <span class="image">
           <img src="{{object.image.url}}" alt="" />
         </span>
@@ -58,16 +59,16 @@
             <a href="{% url 'shop:product-detail' object.id %}" class="button small next">View Car</a>
           </div>
         </header>
-        {%  if forloop.counter|divisibleby:3 or forloop.last %}</article>{%  endif %}
+      </article>
+      {% endfor %}
     </section>
-    {% endfor %}
     <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
+      <ul class="pagination justify-content-center" style="margin-top: 10px;">
         {% if page.has_previous %}
-        <li class="page-item"><a class="page-link" href="{% url 'shop:shop-buy' %}?page={{page.previous_page_number}}">Previous</a></li>
+        <li class="primary"><a class="button" href="{% url 'shop:shop-buy' %}?page={{page.previous_page_number}}">Previous</a></li>
         {% endif %}
         {% if page.has_next%}
-        <li class="page-item"><a class="page-link" href="{% url 'shop:shop-buy' %}?page={{page.next_page_number}}">Next</a></li>
+        <li class="primary"><a class="button" href="{% url 'shop:shop-buy' %}?page={{page.next_page_number}}">Next</a></li>
         {% endif %}
       </ul>
     </nav>
@@ -105,4 +106,7 @@
 
     });
 </script>
+<div class="col" style="text-align: center;margin-top:10px;">
+<a href="{% url 'shop:shop-home' %}" style="text-align: center; margin:10px;" class="button">Back to Home</a>
+</div>
 {% endblock content %}

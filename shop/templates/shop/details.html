@@ -3,6 +3,17 @@
     <title>PRODUCT DETAILS - AMG</title>
 {% endblock title %}
 {% block content %}
+{% if messages %}
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Congratulations!</h4>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+      <hr>
+        <p class="mb-0">You can <a href="#" class="alert-link">Check your orders here</a></p>
+    </div>
+{% endif %}
+
 <div id="main" class="alt">
     <!-- One -->
         <section id="one">
@@ -96,6 +107,7 @@
                 </form>
             </div>
         </section>
+        <section id="contact">
         <div class="inner">
             <section>
                 <header class="major">
@@ -103,9 +115,36 @@
                 </header>
                 <p>{{car.description}}</p>
             </section>
+            <section class="split">
+                <section>
+                    <div class="contact-method">
+                        <span class="icon alt fa-user"></span>
+                        <h3>Seller</h3>
+                        <span>{{car.fullname}}</span>
+                    </div>
+                </section>
+                <section>
+                    <div class="contact-method">
+                        <span class="icon alt fa-envelope"></span>
+                        <h3>Seller Email</h3>
+                        <span>{{car.email}}</span>
+                    </div>
+                </section>
+                <section>
+                    <div class="contact-method">
+                        <span class="icon alt fa-phone"></span>
+                        <h3>Seller Phone</h3>
+                        <span>{{car.mobile}}</span>
+                    </div>
+                </section>
+            </section>
         </div>
+    </section>
 </div>
-<form align="center">
+{% if not request.user.username == car.email %}
+<form method="POST" align="center">
+    {% csrf_token %}
 <button class="primary" style="margin-top: 20px;">BUY NOW</button>
 </form>
+{% endif %}
 {% endblock content%}

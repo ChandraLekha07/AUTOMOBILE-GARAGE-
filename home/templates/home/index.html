@@ -88,7 +88,7 @@
           </article>
           <article>
             <span class="image">
-              <img src="/static/images/blog-3-720x480.jpg" alt="" />
+              <img src="/static/images/rivenditore.png" alt="" />
             </span>
             <header class="major">
               <h3>Become a dealer</h3>
@@ -132,7 +132,7 @@
 
                     <ul class="icons">
                       <li><a href="https://github.com/mohanavamsi20" class="icon alt fa-github"><span class="label">Github</span></a></li>
-                      <li><a href="www.linkedin.com/in/mohana-vamsi-batchu-8abb39188" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                      <li><a href="https://www.linkedin.com/in/mohana-vamsi-batchu-8abb39188/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
                     </ul>
                   </div>
 
@@ -157,7 +157,17 @@
               <header class="major">
                 <h2>Contact us</h2>
               </header>
-              <form method="post" action=".">
+              {% if messages %}
+              <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Thank you for the feedback!</h4>
+                  {% for message in messages %}
+                      <p>{{ message }}</p>
+                  {% endfor %}
+                  <p class="mb-0">Check out <a href="{% url 'models:models-home' %}" class="alert-link">Our latest models here.</a></p>
+              </div>
+              {% endif %}
+              <form method="post" action=" ">
+                {% csrf_token %}
                 <div class="fields">
                   <div class="field half">
                     <label for="name">Name</label>

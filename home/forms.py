@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.widgets import Widget
 
-from .models import User, Dealer, City
+from .models import *
 
 class UserModelForm(forms.ModelForm):
     firstname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control',
@@ -184,3 +184,8 @@ class UserUpdateForm(forms.ModelForm):
         if len(mobile)<10:
             raise forms.ValidationError("Mobile cannot be less than 10-digits")
         return mobile
+
+class MessagesModelForm(forms.ModelForm):
+    class Meta:
+        model = Messages
+        fields = '__all__'

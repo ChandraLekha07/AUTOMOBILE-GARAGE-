@@ -3,6 +3,14 @@
     <title>MODEL DETAILS - AMG</title>
 {% endblock title %}
 {% block content %}
+{% if messages %}
+<div class="alert alert-success" role="alert">
+  <h4 class="alert-heading">Congratulations!</h4>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
 <div id="main" class="alt">
     <!-- One -->
         <section id="one">

@@ -35,10 +35,10 @@
       <li><a href="{% url 'home:profile' %}">Your Profile</a></li>
       {% endblock menuyourprofile%}
       {% block menuyourorder%}
-      <li><a href="#">Your orders</a></li>
+      <li><a href="{% url 'shop:shop-orders' %}">Your orders</a></li>
       {% endblock menuyourorder%}
       {% block menuyoursales%}
-      <li><a href="#">Your Sales</a></li>
+      <li><a href="{% url 'shop:shop-sales' %}">Your Sales</a></li>
       {% endblock menuyoursales%}
       {% block menudashboard%}
       <li><a href="#">Dashboard</a></li>

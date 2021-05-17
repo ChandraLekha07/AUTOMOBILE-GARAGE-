@@ -3,10 +3,10 @@
   <title>Delete your profile permanently</title>
 {% endblock title %}
 {% block content %}
-<header class="major">
+<header class="major" style="margin-left:43%;">
   <h2>CONFIRM DELETE</h2>
 </header>
-  <form method="POST" >
+  <form method="POST" style="margin-left:15%;">
         {% csrf_token %}
         <div class="container fields">
           {% for field in form %}

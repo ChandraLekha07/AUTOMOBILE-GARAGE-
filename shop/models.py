@@ -1,6 +1,6 @@
 from django.db import models
 
-from home.models import State, City, Dealer
+from home.models import State, City, Dealer, User
 from models.models import Make, Model, Variant
 from django.db import models
 
@@ -8,6 +8,7 @@ from django.db import models
 class SellCar(models.Model):
     fullname = models.CharField(max_length=100, blank=False)
     email = models.EmailField(blank=False)
+    mobile=models.CharField(max_length=15,blank=False)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True)
     make = models.ForeignKey(Make, on_delete=models.SET_NULL, blank=True, null=True)
@@ -27,6 +28,7 @@ class SellCar(models.Model):
     price = models.CharField(max_length=100, blank=False)
     kilometer = models.CharField(max_length=100, blank=False)
     reg_no = models.CharField(max_length=20, blank=False)
+    status = models.BooleanField(default=True)
 
     class Meta:
         ordering = ('id',)
@@ -48,4 +50,8 @@ class SellCar(models.Model):
         return super(SellCar, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.fullname+' '+str(self.reg_no)+' '+str(self.make)+' '+str(self.model)+' '+str(self.variant)
+        return self.fullname+' '+str(self.reg_no)+' '+str(self.make)+' '+str(self.model)+' '+str(self.variant)+' '+str(self.reg_no)
+
+class BuyCar(models.Model):
+    car = models.ForeignKey(SellCar, on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True) 
