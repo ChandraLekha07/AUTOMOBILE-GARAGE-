@@ -1,6 +1,7 @@
 from django import forms
+from django.forms.widgets import Widget
 
-from .models import User, City
+from .models import User, Dealer, City
 
 class UserModelForm(forms.ModelForm):
     firstname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control',
@@ -59,6 +60,44 @@ class UserModelForm(forms.ModelForm):
         if (not any(char.isdigit() for char in password)) or (not any(char.isupper() for char in password)) or (not any(char.islower() for char in password)):
             raise forms.ValidationError('Password should have at least one numeral,uppercase letter,lowercase letter')
         return password
+
+    def clean_mobile(self):
+        mobile = self.cleaned_data.get('mobile')
+        if not mobile.isnumeric():
+            raise forms.ValidationError("Mobile number should be a number")
+        if len(mobile)<10:
+            raise forms.ValidationError("Mobile cannot be less than 10-digits")
+        return mobile
+
+class DealerModelForm(forms.ModelForm):
+    name = forms.CharField(max_length=50, widget=forms.TextInput())
+    email = forms.EmailField(widget=forms.EmailInput())
+    mobile = forms.CharField(max_length=15, widget=forms.TextInput())
+    address = forms.CharField(widget=forms.TextInput())
+
+    class Meta:
+        model = Dealer
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.none()
+
+        if 'state' in self.data:
+            try:
+                state_id = int(self.data.get('state'))
+                self.fields['city'].queryset = City.objects.filter(state_id=state_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['city'].queryset = self.instance.state.city_set.order_by('name')
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        for instance in Dealer.objects.all():
+            if instance.email == email:
+                raise forms.ValidationError('An account already exists with the given email', email)
+        return email
 
     def clean_mobile(self):
         mobile = self.cleaned_data.get('mobile')

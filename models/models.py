@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import *
-
+from home.models import Dealer
 
 # Create your models here.
 
@@ -19,7 +19,7 @@ class Model(models.Model):
     name = models.CharField(max_length=40)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('make', 'name',)
 
     def __str__(self):
         return self.name
@@ -31,7 +31,7 @@ class Variant(models.Model):
     name = models.CharField(max_length=40)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('make', 'model', 'name',)
 
     def __str__(self):
         return self.model.name + ' ' + self.name
@@ -54,6 +54,10 @@ class Car(models.Model):
     doors = models.CharField(max_length=20, blank=True, null=True)
     colors = models.CharField(max_length=100, blank=True, null=True)
     price = models.CharField(max_length=100, blank=True, null=True)
+    dealer =models.ForeignKey(Dealer,on_delete=models.SET_NULL,blank=True,null=True)
+    
+    class Meta:
+        ordering = ('id',)
 
     def remove_on_image_update(self):
         try:

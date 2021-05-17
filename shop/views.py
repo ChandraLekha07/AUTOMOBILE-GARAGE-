@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 
 from .forms import SellCarModelForm
-
+from django.contrib import messages
 from models.models import Make, Model, Variant
 from .models import SellCar
 from .filters import ShopCarFilter
@@ -37,9 +37,8 @@ class SellCreateView(View):
             if form.is_valid():
                 form.save()
                 sendMail(request, form)
-                form = SellCarModelForm()
-                context = {"form": form}
-                return render(request, self.success_url, context)
+                messages.info(request, 'Your product is online Check your gmail for more info')
+                list(messages.get_messages(request))
             return render(request, self.template_name, context)
         return redirect('/login')
 
@@ -66,7 +65,7 @@ def sendMail(request, form):
         make = form.cleaned_data['make']
         model = form.cleaned_data['model']
         variant = form.cleaned_data['variant']
-        expectedprice = form.cleaned_data['expectedprice']
+        price = form.cleaned_data['price']
         receiver = form.cleaned_data['email']
         print(sender, password)
         print(receiver)
@@ -75,7 +74,7 @@ def sendMail(request, form):
                     "Make: " + str(make) + "\n"
                     "Model: " + str(model) + "\n"
                     "Variant: " + str(variant) + "\n"
-                     "is BOOKED for an initial price of "+ str(expectedprice) +"\n"
+                     "is BOOKED for an initial price of "+ str(price) +"\n"
                      "Contact dealer for more updates\n"
                      "Team AMG")
         email_text = """\
@@ -102,7 +101,7 @@ def render_buy(request):
             myFilter = ShopCarFilter(request.POST, queryset=objects)
             objects = myFilter.qs
             page_num = request.GET.get('page')
-            models_paginator = Paginator(objects, 8)
+            models_paginator = Paginator(objects, 6)
             page = models_paginator.get_page(page_num)
             context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
             return render(request, template_name, context)
@@ -111,7 +110,7 @@ def render_buy(request):
             myFilter = ShopCarFilter(request.POST, queryset=objects)
             objects = myFilter.qs
             page_num = request.GET.get('page')
-            models_paginator = Paginator(objects, 8)
+            models_paginator = Paginator(objects, 6)
             page = models_paginator.get_page(page_num)
             context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
             return render(request, template_name, context)

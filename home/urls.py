@@ -9,6 +9,6 @@ urlpatterns = [
     path('account/', profile, name="profile"),
     path('account/update/', update, name="account-update"),
     path('account/delete/', delete, name="account-delete"),
-
     path('load-cities/', load_cities, name='load_cities'),
+    path('dealer/', dealerCreateView.as_view(), name='dealer'),
 ]

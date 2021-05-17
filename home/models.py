@@ -40,10 +40,10 @@ class Dealer(models.Model):
     mobile = models.CharField(max_length=15, blank=False)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True)
-    address = models.TextField()
+    address = models.CharField(max_length=150)
 
     class Meta:
         ordering = ('name',)
 
     def __str__(self):
-        return self.name
+        return self.name+' '+str(self.state)+' '+str(self.city)+' '+self.address

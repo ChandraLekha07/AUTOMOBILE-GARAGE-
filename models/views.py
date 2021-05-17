@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 
 from .models import Car
 from .filters import CarFilter
@@ -14,7 +14,7 @@ def models_home(request):
         myFilter = CarFilter(request.POST, queryset=objects)
         objects = myFilter.qs
         page_num = request.GET.get('page')
-        models_paginator = Paginator(objects, 8)
+        models_paginator = Paginator(objects, 3)
         page = models_paginator.get_page(page_num)
         context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
         return render(request, template_name, context)
@@ -23,7 +23,7 @@ def models_home(request):
         myFilter = CarFilter(request.POST, queryset=objects)
         objects = myFilter.qs
         page_num = request.GET.get('page')
-        models_paginator = Paginator(objects, 8)
+        models_paginator = Paginator(objects, 3)
         page = models_paginator.get_page(page_num)
         context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
         return render(request, template_name, context)
@@ -35,3 +35,7 @@ def detail(request,id):
         car=get_object_or_404(Car,id=id)
         context={'car':car}
         return render(request,template_name,context)
+    if request.method == 'POST':
+        if 'username' in request.session:
+            return render(request,template_name)
+        return redirect('/login')

@@ -27,7 +27,7 @@
                             <div class="col-md-4 col-xs-6"><img src="images/product-6-720x480.jpg" class="img-responsive" alt=""></div>
                         </div>
                         <br>
-                        <h2>Ex-Showroom Price :{{car.price}}</h2>
+                        <h2>Ex-Showroom Price : <i class="fa fa-inr"> {{car.price}}</i></h2>
                     </div>
                 </div>
                 <br>
@@ -96,16 +96,45 @@
                 </form>
             </div>
         </section>
-        <div class="inner">
-            <section>
-                <header class="major">
-                    <h2>Vehicle Description</h2>
-                </header>
-                <p>{{car.description}}</p>
-            </section>
-        </div>
+        <section id="contact">
+            <div class="inner">
+                <section>
+                    <header class="major">
+                        <h2>Vehicle Description</h2>
+                    </header>
+
+                    <p>{{car.description}}</p>
+                </section>
+
+                <section class="split">
+                    <section>
+                        <div class="contact-method">
+                            <span class="icon alt fa-user"></span>
+                            <h3>Dealer</h3>
+                            <span>{{car.dealer}}</span>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="contact-method">
+                            <span class="icon alt fa-envelope"></span>
+                            <h3>Dealer Email</h3>
+                            <a href="#">{{car.dealer.email}}</a>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="contact-method">
+                            <span class="icon alt fa-phone"></span>
+                            <h3>Dealer Phone</h3>
+                            <span>{{car.dealer.mobile}}</span>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </section>
 </div>
-<form align="center">
+<form align="center" method="POST">
+    {% csrf_token %}
 <button class="primary" style="margin-top: 20px;">BOOK NOW</button>
 </form>
 {% endblock content%}

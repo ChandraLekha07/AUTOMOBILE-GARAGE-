@@ -4,7 +4,7 @@ from django.contrib import messages
 
 from django.views import View
 from .models import User
-from .forms import UserModelForm, UserLoginForm, UserViewForm, UserUpdateForm
+from .forms import UserModelForm, UserLoginForm, UserViewForm, UserUpdateForm, DealerModelForm
 from models.models import Car
 from .models import User, City
 
@@ -123,3 +123,22 @@ def delete(request):
             list(messages.get_messages(request))
             return render(request, 'home/index.html')
     return redirect('/login')
+
+class dealerCreateView(View):
+    template_name = 'registration/dealer.html'
+
+    def get(self, request, *args, **kwargs):
+        if 'username' not in request.session:
+            return redirect('/login')
+        form = DealerModelForm()
+        context = {"form":form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = DealerModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, 'You are now a dealer at AMG')
+            list(messages.get_messages(request))
+        context = {"form": form}
+        return render(request, self.template_name, context)

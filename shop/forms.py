@@ -6,19 +6,13 @@ from models.models import Model, Variant
 from .models import SellCar
 
 class SellCarModelForm(forms.ModelForm):
-    fullname = forms.CharField(max_length= 100, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                              'placeholder': 'Enter your full name'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control',
-                                                                         'placeholder':'Enter your email'}))
+    fullname = forms.CharField(max_length= 100, widget=forms.TextInput())
+    email = forms.EmailField(widget=forms.EmailInput())
 
-    year = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                              'placeholder': 'Enter year vehicle was bought'}))
-    kilometer = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                              'placeholder': 'Enter kilometers vehicle travelled'}))
-    reg_no = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                              'placeholder': 'Enter your vehicle registration id'}))
-    price = forms.CharField(max_length= 10, widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                              'placeholder': 'Enter price (in number)'}))
+    year = forms.CharField(max_length=4, widget=forms.TextInput())
+    kilometer = forms.CharField(max_length=10, widget=forms.TextInput())
+    reg_no = forms.CharField(max_length=10, widget=forms.TextInput())
+    price = forms.CharField(max_length= 10, widget=forms.TextInput())
 
     class Meta:
         model = SellCar
@@ -98,11 +92,3 @@ class SellCarModelForm(forms.ModelForm):
             if instance.reg_no == reg_no:
                 raise forms.ValidationError('This car with reg_no '+str(reg_no)+' is already on sale!')
         return reg_no
-
-    def clean_price(self):
-        price = float(self.cleaned_data.get('price'))
-        if len(str(price)) < 5:
-            raise forms.ValidationError("Cannot be less than 5 digits")
-        if price<0:
-            raise forms.ValidationError("Price cannot be negative")
-        return price
