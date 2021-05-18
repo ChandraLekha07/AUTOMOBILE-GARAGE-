@@ -73,7 +73,10 @@ class UserLoginView(View):
                 else:
                     request.session['username'] = user_obj.email
                     request.user = user_obj.email
-                    return redirect('/')
+                    if 'next' in request.POST:
+                        return redirect(request.POST.get('next'))
+                    else:
+                        return redirect('/')
             except User.DoesNotExist:
                 messages.info(request, 'User does not exist with given email')
                 list(messages.get_messages(request))

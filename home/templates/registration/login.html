@@ -40,6 +40,9 @@
             </div>
           {% endfor %}
           <div class="col" style="text-align: center;margin-top:20px;">
+              {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}" />
+              {% endif %}
               <button type="submit" class="primary" style="margin-right:10px;">Login</button>
               <a href="{% url 'home:signup' %}" class="button">New user? Create your account here</a>
           </div>
