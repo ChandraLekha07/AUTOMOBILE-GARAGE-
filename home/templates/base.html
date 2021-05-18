@@ -31,18 +31,18 @@
       <li> <a href="{% url 'shop:shop-home'%}">Old Cars</a> </li>
       {% endblock menuoldcars %}
       {% if request.session.username %}
-      {% block menuyourprofile%}
+      {% block menuyourprofile %}
       <li><a href="{% url 'home:profile' %}">Your Profile</a></li>
-      {% endblock menuyourprofile%}
-      {% block menuyourorder%}
+      {% endblock menuyourprofile %}
+      {% block menuyourorder %}
       <li><a href="{% url 'shop:shop-orders' %}">Your orders</a></li>
-      {% endblock menuyourorder%}
-      {% block menuyoursales%}
+      {% endblock menuyourorder %}
+      {% block menuyoursales %}
       <li><a href="{% url 'shop:shop-sales' %}">Your Sales</a></li>
-      {% endblock menuyoursales%}
-      {% block menudashboard%}
-      <li><a href="#">Dashboard</a></li>
-      {% endblock menudashboard%}
+      {% endblock menuyoursales %}
+      {% block menudashboard %}
+      <li><a href="{% url 'dashboard:dashboard-home' %}">Dashboard</a></li>
+      {% endblock menudashboard %}
       <li><a href="{% url 'home:logout' %}">Logout</a></li>
       {% else %}
       {% block navbarprofile %}
