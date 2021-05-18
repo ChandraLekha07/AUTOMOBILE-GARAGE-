@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Dealer Locator - AMG</title>
+{% endblock title %}
+{% block content %}
+{% if location %}
+<h1>Your Location:</h1>
+{{ location.display_name }}
+{% endif %}
+{% if dealer %}
+<h1>Nearest Dealer at you</h1>
+{{ dealer.name }}
+{{ dealer.email }}
+{{ dealer.mobile }}
+{{ dealer.state }}
+{{ dealer.city }}
+{{ dealer.address }}
+{{ distance }} km
+{% else %}
+<form align="center" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="primary" style="margin-top: 20px;">Get Nearest Dealer</button>
+</form>
+{% endif %}
+{% endblock content %}

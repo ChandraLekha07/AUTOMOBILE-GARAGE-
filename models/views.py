@@ -1,15 +1,24 @@
+from geopy import geocoders
 from shop.models import BuyCar
 from home.models import User, Dealer
 from models.forms import DealsModelForm
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 
+from home.models import Dealer
 from .models import Car
 from .filters import CarFilter
 from django.core.paginator import Paginator
 
 from models.models import Model, Variant
 import smtplib, ssl
+
+from geopy.geocoders import Nominatim
+import time
+from pprint import pprint
+import geocoder
+from math import cos, asin, sqrt
+from geopy.distance import geodesic
 
 # Create your views here.
 def models_home(request):
@@ -158,3 +167,60 @@ def mailDealer(request, info):
         print("Email sent to dealer!")
         return
     return redirect('/login')
+
+def dealer_locate(request):
+    template_name = 'models/dealer_locate.html'
+    if request.method == 'GET':
+        g = geocoder.ip('me')
+        latitude = g.latlng[0]
+        longitude = g.latlng[1]
+        location = get_address_by_location(latitude, longitude)
+        context = {"location": location}
+        return render(request, template_name, context)
+    if request.method == 'POST':
+        app = Nominatim(user_agent="user")
+        g = geocoder.ip('me')
+        userlat = g.latlng[0]
+        userlon = g.latlng[1]
+        userloc = (userlat,userlon)
+        dealer = Dealer.objects.all()[:1]
+        for first in dealer:
+            state = first.state
+            city = first.city
+            address = str(state)+','+str(city)
+            firstlat = get_location_by_address(address)['lat']
+            firstlon = get_location_by_address(address)['lon']
+            dealerloc = (firstlat, firstlon)
+            min = geodesic(userloc, dealerloc).km
+            dealer = first
+        objects = Dealer.objects.all()[1:]            
+        for object in objects:
+            state = object.state
+            city = object.city
+            address = str(state)+','+str(city)
+            objectlat = get_location_by_address(address)['lat']
+            objectlon = get_location_by_address(address)['lon']
+            dealerloc = (objectlat, objectlon)
+            distance = geodesic(userloc, dealerloc).km
+            if distance < min:
+                min = distance
+                dealer = object
+        context = {"dealer": dealer, "distance": min}
+        return render(request, template_name, context)
+
+def get_address_by_location(latitude, longitude, language="en"):
+    coordinates = f"{latitude}, {longitude}"
+    time.sleep(1)
+    app = Nominatim(user_agent="user")
+    try:
+        return app.reverse(coordinates, language=language).raw
+    except:
+        return get_address_by_location(latitude, longitude)
+
+def get_location_by_address(address):
+    time.sleep(1)
+    app = Nominatim(user_agent="user")
+    try:
+        return app.geocode(address).raw
+    except:
+        return get_location_by_address(address)
