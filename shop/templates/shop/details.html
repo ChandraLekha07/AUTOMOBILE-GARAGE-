@@ -29,13 +29,24 @@
 
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-4 col-xs-6"><img src="images/product-1-720x480.jpg" class="img-responsive" alt=""></div>
-                            <div class="col-md-4 col-xs-6"><img src="images/product-2-720x480.jpg" class="img-responsive" alt=""></div>
-                            <div class="col-md-4 col-xs-6"><img src="images/product-3-720x480.jpg" class="img-responsive" alt=""></div>
-
-                            <div class="col-md-4 col-xs-6"><img src="images/product-4-720x480.jpg" class="img-responsive" alt=""></div>
-                            <div class="col-md-4 col-xs-6"><img src="images/product-5-720x480.jpg" class="img-responsive" alt=""></div>
-                            <div class="col-md-4 col-xs-6"><img src="images/product-6-720x480.jpg" class="img-responsive" alt=""></div>
+                            {% if car.image1 %}
+                            <div class="col-md-4 col-xs-6"><img src="{{car.image1.url}}" class="img-responsive" alt=""></div>
+                            {% endif %}
+                            {% if car.image2 %}
+                            <div class="col-md-4 col-xs-6"><img src="{{car.image2.url}}" class="img-responsive" alt=""></div>
+                            {% endif %}
+                            {% if car.image3 %}
+                            <div class="col-md-4 col-xs-6"><img src="{{car.image3.url}}" class="img-responsive" alt=""></div>
+                            {% endif %}
+                            {% if car.image4 %}
+                            <div class="col-md-4 col-xs-6"><img src="{{car.image4.url}}" class="img-responsive" alt=""></div>
+                            {% endif %}
+                            {% if car.image5 %}
+                            <div class="col-md-4 col-xs-6"><img src="{{car.image5.url}}" class="img-responsive" alt=""></div>
+                            {% endif %}
+                            {% if car.image6 %}
+                            <div class="col-md-4 col-xs-6"><img src="{{car.image6.url}}" class="img-responsive" alt=""></div>
+                            {% endif %}
                         </div>
                         <br>
                         <h2>Price :{{car.price}}</h2>

@@ -43,6 +43,12 @@ class Car(models.Model):
     variant = models.ForeignKey(Variant, on_delete=models.SET_NULL, blank=True, null=True)
 
     image = models.ImageField(upload_to='newcars/', blank=True)
+    image1 = models.ImageField(upload_to='newcars/', blank=True,null=True)
+    image2 = models.ImageField(upload_to='newcars/', blank=True,null=True)
+    image3 = models.ImageField(upload_to='newcars/', blank=True,null=True)
+    image4 = models.ImageField(upload_to='newcars/', blank=True,null=True)
+    image5 = models.ImageField(upload_to='newcars/', blank=True,null=True)
+    image6 = models.ImageField(upload_to='newcars/', blank=True,null=True)
     description = models.TextField()
     year = models.CharField(max_length=4, blank=True, null=True)
     mileage = models.CharField(max_length=20, blank=True, null=True)
