@@ -16,10 +16,7 @@ import smtplib, ssl
 # Create your views here.
 def render_shop(request):
     template_name = 'shop/home.html'
-
-    if 'username' in request.session:
-        return render(request, template_name)
-    return redirect('/login')
+    return render(request, template_name)
 
 class SellCreateView(View):
     template_name = 'shop/sell_oldcar.html'
@@ -95,8 +92,17 @@ def mailSeller(request, form):
 
 def render_buy(request):
     template_name = 'shop/buy_oldcar.html'
-    if 'username' in request.session:
-        if request.method == 'GET':
+    if request.method == 'GET':
+        objects = SellCar.objects.filter(status='True')
+        myFilter = ShopCarFilter(request.POST, queryset=objects)
+        objects = myFilter.qs
+        page_num = request.GET.get('page')
+        models_paginator = Paginator(objects, 6)
+        page = models_paginator.get_page(page_num)
+        context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
+        return render(request, template_name, context)
+    if request.method == 'POST':
+        if 'username' in request.session:
             objects = SellCar.objects.filter(status='True')
             myFilter = ShopCarFilter(request.POST, queryset=objects)
             objects = myFilter.qs
@@ -105,17 +111,8 @@ def render_buy(request):
             page = models_paginator.get_page(page_num)
             context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
             return render(request, template_name, context)
-        if request.method == 'POST':
-            objects = SellCar.objects.filter(status='True')
-            myFilter = ShopCarFilter(request.POST, queryset=objects)
-            objects = myFilter.qs
-            page_num = request.GET.get('page')
-            models_paginator = Paginator(objects, 6)
-            page = models_paginator.get_page(page_num)
-            context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
-            return render(request, template_name, context)
-        return render(request, template_name)
-    return redirect('/login')
+        return redirect('/login')
+    return render(request, template_name)
 
 def product_detail(request,id):
     template_name = 'shop/details.html'
@@ -140,8 +137,9 @@ def product_detail(request,id):
                 form.save()
                 messages.info(request, 'You have ordered this car')
                 list(messages.get_messages(request))
+                return render(request, template_name, context)
             return render(request,template_name)
-        return render('/login')
+        return redirect('/login')
 
 def your_sales(request):
     template_name='shop/sales.html'

@@ -141,8 +141,12 @@
         </div>
     </section>
 </div>
+{% if request.session.username != car.email %}
+{% if car.status %}
 <form method="POST" align="center">
     {% csrf_token %}
 <button class="primary" style="margin-top: 20px;">BUY NOW</button>
 </form>
+{% endif %}
+{% endif %}
 {% endblock content%}

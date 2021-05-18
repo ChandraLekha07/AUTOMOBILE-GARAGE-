@@ -98,7 +98,7 @@ class SellCarModelForm(forms.ModelForm):
         if reg_no<0:
             raise forms.ValidationError("Registration number cannot be negative")
         for instance in SellCar.objects.all():
-            if instance.reg_no == reg_no:
+            if int(instance.reg_no) == int(reg_no):
                 raise forms.ValidationError('This car with reg_no '+str(reg_no)+' is already on sale!')
         return reg_no
         
