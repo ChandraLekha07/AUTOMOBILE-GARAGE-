@@ -44,8 +44,8 @@ def detail(request,id):
         if 'username' in request.session:
             form = DealsModelForm(request.POST)
             context = {"form": form}
-            car=get_object_or_404(Car,id=id)
-            dealer=get_object_or_404(Dealer,id=id)
+            car = get_object_or_404(Car, id=id)
+            dealer = get_object_or_404(Dealer, id=id)
             buyer = User.objects.get(email=request.session.get('username'))
 
             info = {}
@@ -58,9 +58,9 @@ def detail(request,id):
                 att.car = info['car']
                 att.dealer = info['dealer']
                 att.buyer = info['buyer']
-                # form.save()
-                mailBuyer(request, form)
-                mailDealer(request, form)
+                form.save()
+                mailBuyer(request, info)
+                mailDealer(request, info)
                 messages.info(request, 'You have booked a Deal Check your gmail for more info')
                 list(messages.get_messages(request))
                 form = DealsModelForm()
@@ -69,7 +69,7 @@ def detail(request,id):
             return render(request, template_name, context)
         return redirect('/login')
 
-def mailBuyer(request, form):
+def mailBuyer(request, info):
     if 'username' in request.session:
         sender = "",
         password = ""
@@ -78,30 +78,48 @@ def mailBuyer(request, form):
             sender = file[0].strip()
             password = file[1].strip()
         port = 465
-        form.car
-        receiver = form.buyer.user.email
-        print(receiver)
-        # sent_body = ("Hello, Mr./Ms."+ fullname + " Your automobile sale is live \n"
-        #             "Make: " + str(make) + "\n"
-        #             "Model: " + str(model) + "\n"
-        #             "Variant: " + str(variant) + "\n"
-        #              "Price: "+ str(price) +"\n"+"\n"
-        #              "Contact us for queries\n"
-        #              "Team AMG")
-        # email_text = """\From: %s
+        make = info['car'].make
+        model = info['car'].model
+        variant = info['car'].variant
+        fuel = info['car'].fuel
+        price = info['car'].price
+        name = info['dealer'].name
+        mobile = info['dealer'].mobile
+        state = info['dealer'].state
+        city = info['dealer'].city
+        address = info['dealer'].address
+        email = info['dealer'].email
+        receiver_name = info['buyer'].firstname + ' ' + info['buyer'].lastname
+        receiver = info['buyer'].email
+        sent_body = ("Hello, Mr./Ms."+ receiver_name + " Your deal is booked for the following car \n"
+                    "Make: " + str(make) + "\n"
+                    "Model: " + str(model) + "\n"
+                    "Variant: " + str(variant) + "\n"
+                    "Fuel: " + str(fuel) + "\n"
+                    "Price: "+ str(price) +"\n"+"\n"
+                    "Contact : " + "\n"
+                    "Dealer name: " + str(name) + "\n"
+                    "Mobile: " + str(mobile) + "\n"
+                    "Email: " + str(email) + "\n"
+                    "State: " + str(state) + "\n"
+                    "City: " + str(city) + "\n"
+                    "Address: " + str(address) + "\n"
+                     "\n"
+                     "Team AMG")
+        email_text = """\From: %s
 
-        #         %s
-        #         """ % (sender,  sent_body)
-        # context = ssl.create_default_context()
-        # print("Starting to send")
-        # with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-        #     server.login(sender, password)
-        #     server.sendmail(sender, receiver, email_text)
-        # print("Email sent!")
-        # return
+                %s
+                """ % (sender,  sent_body)
+        context = ssl.create_default_context()
+        print("Starting to send to buyer")
+        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+            server.login(sender, password)
+            server.sendmail(sender, receiver, email_text)
+        print("Email sent to buyer!")
+        return
     return redirect('/login')
 
-def mailDealer(request, form):
+def mailDealer(request, info):
     if 'username' in request.session:
         sender = "",
         password = ""
@@ -110,30 +128,33 @@ def mailDealer(request, form):
             sender = file[0].strip()
             password = file[1].strip()
         port = 465
-        # fullname = form.cleaned_data['fullname']
-        # make = form.cleaned_data['make']
-        # model = form.cleaned_data['model']
-        # variant = form.cleaned_data['variant']
-        # price = form.cleaned_data['price']
-        # receiver = form.cleaned_data['email']
-        # print(sender, password)
-        # print(receiver)
-        # sent_body = ("Hello, Mr./Ms."+ fullname + " Your automobile sale is live \n"
-        #             "Make: " + str(make) + "\n"
-        #             "Model: " + str(model) + "\n"
-        #             "Variant: " + str(variant) + "\n"
-        #              "Price: "+ str(price) +"\n"+"\n"
-        #              "Contact us for queries\n"
-        #              "Team AMG")
-        # email_text = """\From: %s
+        price = info['car'].price
+        name = info['buyer'].firstname + ' ' + info['buyer'].lastname
+        mobile = info['buyer'].mobile
+        state = info['buyer'].state
+        city = info['buyer'].city
+        email = info['buyer'].email
+        receiver_name = info['dealer'].name
+        receiver = info['dealer'].email
+        sent_body = (
+                    "\n" + "\n"
+                    "Contact : " + "\n"
+                    "Buyer name: " + str(name) + "\n"
+                    "Mobile: " + str(mobile) + "\n"
+                    "Email: " + str(email) + "\n"
+                    "State: " + str(state) + "\n"
+                    "City: " + str(city) + "\n"
+                    "\n"
+                    "Team AMG")
 
-        #         %s
-        #         """ % (sender,  sent_body)
-        # context = ssl.create_default_context()
-        # print("Starting to send")
-        # with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-        #     server.login(sender, password)
-        #     server.sendmail(sender, receiver, email_text)
-        # print("Email sent!")
-        # return
+        email_text = """\From: %s
+                %s
+                """ % (sender,  sent_body)
+        context = ssl.create_default_context()
+        print("Starting to send to dealer")
+        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+            server.login(sender, password)
+            server.sendmail(sender, receiver, email_text)
+        print("Email sent to dealer!")
+        return
     return redirect('/login')
