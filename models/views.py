@@ -19,7 +19,7 @@ def models_home(request):
         myFilter = CarFilter(request.POST, queryset=objects)
         objects = myFilter.qs
         page_num = request.GET.get('page')
-        models_paginator = Paginator(objects, 2)
+        models_paginator = Paginator(objects, 6)
         page = models_paginator.get_page(page_num)
         context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
         return render(request, template_name, context)
@@ -28,7 +28,7 @@ def models_home(request):
         myFilter = CarFilter(request.POST, queryset=objects)
         objects = myFilter.qs
         page_num = request.GET.get('page')
-        models_paginator = Paginator(objects, 2)
+        models_paginator = Paginator(objects, 6)
         page = models_paginator.get_page(page_num)
         context = {"objects": objects, 'myFilter': myFilter, 'count': models_paginator.count, 'page': page}
         return render(request, template_name, context)

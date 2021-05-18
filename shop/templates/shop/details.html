@@ -10,7 +10,7 @@
             <p>{{ message }}</p>
         {% endfor %}
       <hr>
-        <p class="mb-0">You can <a href="#" class="alert-link">Check your orders here</a></p>
+        <p class="mb-0">You can <a href="{% url 'shop:shop-orders' %}" class="alert-link">Check your orders here</a></p>
     </div>
 {% endif %}
 
@@ -141,10 +141,8 @@
         </div>
     </section>
 </div>
-{% if not request.user.username == car.email %}
 <form method="POST" align="center">
     {% csrf_token %}
 <button class="primary" style="margin-top: 20px;">BUY NOW</button>
 </form>
-{% endif %}
 {% endblock content%}
