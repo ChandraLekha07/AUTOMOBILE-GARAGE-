@@ -15,7 +15,8 @@
     </section>
     <section>
       <div class="inner">
-        <form method="post" align="center" id="buyfilterForm" data-models-url="{% url 'shop:load_models' %}" data-variants-url="{% url 'shop:load_variants' %}">
+        <form method="post" align="center" id="buyfilterForm" data-models-url="{% url 'shop:load_models' %}"
+              data-variants-url="{% url 'shop:load_variants' %}" data-cities-url="{% url 'home:load_cities' %}">
           {% csrf_token %}
           <div class="container fields">
             <div class="field quarter">
@@ -30,11 +31,19 @@
               <label>{{myFilter.form.variant.label}}</label>
               {{myFilter.form.variant}}
             </div>
-            <div class="field half text-right">
+            <div class="field quarter">
+              <label>{{myFilter.form.state.label}}</label>
+              {{myFilter.form.state}}
+            </div>
+            <div class="field quarter">
+              <label>{{myFilter.form.city.label}}</label>
+              {{myFilter.form.city}}
+            </div>
+          </div>
+          <div class="field half text-right">
               <ul class="actions">
                 <li><input type="submit" value="Search" class="primary"></li>
               </ul>
-            </div>
           </div>
         </form>
       </div>
@@ -101,6 +110,21 @@
             },
             success: function (data) {
                 $("#id_variant").html(data);
+            }
+        });
+
+    });
+    $("#id_state").change(function () {
+        const url = $("#buyfilterForm").attr("data-cities-url");
+        const stateId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'state_id': stateId
+            },
+            success: function (data) {
+                $("#id_city").html(data);
             }
         });
 
