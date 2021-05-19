@@ -233,7 +233,10 @@ def custom(request):
     template_name = 'models/custom.html'
     if request.method == 'GET':
         form = CustomsModelForm()
-        car=get_object_or_404(Car,id=request.session['carid'])
+        try:
+            car=get_object_or_404(Car,id=request.session['carid'])
+        except KeyError:
+            return redirect('/login')
         context={'form': form,'car':car}
         return render(request, template_name, context)
     if 'username' in request.session:
@@ -249,6 +252,7 @@ def custom(request):
             info['dealer'] = dealer
             info['buyer'] = buyer
             info['color'] = color
+            print(info)
 
             if form.is_valid():
                 att = form.save(commit=False)
@@ -256,6 +260,7 @@ def custom(request):
                 att.dealer = info['dealer']
                 att.buyer = info['buyer']
                 att.color = info['color']
+                print(att)
                 # form.save()
                 # mailCustomBuyer(request, info)
                 # mailCustomDealer(request, info)
