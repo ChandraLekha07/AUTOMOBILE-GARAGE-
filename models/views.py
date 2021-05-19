@@ -1,12 +1,12 @@
 from geopy import geocoders
 from shop.models import BuyCar
 from home.models import User, Dealer
-from models.forms import DealsModelForm
+from models.forms import *
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 
 from home.models import Dealer
-from .models import Car
+from .models import Car,Custom
 from .filters import CarFilter
 from django.core.paginator import Paginator
 
@@ -48,6 +48,8 @@ def detail(request,id):
     if request.method == 'GET':
         car=get_object_or_404(Car,id=id)
         context={'car':car}
+        print(car.id)
+        request.session['carid'] = car.id
         return render(request,template_name,context)
     if request.method == 'POST':
         if 'username' in request.session:
@@ -183,17 +185,9 @@ def dealer_locate(request):
         userlat = g.latlng[0]
         userlon = g.latlng[1]
         userloc = (userlat,userlon)
-        dealer = Dealer.objects.all()[:1]
-        for first in dealer:
-            state = first.state
-            city = first.city
-            address = str(state)+','+str(city)
-            firstlat = get_location_by_address(address)['lat']
-            firstlon = get_location_by_address(address)['lon']
-            dealerloc = (firstlat, firstlon)
-            min = geodesic(userloc, dealerloc).km
-            dealer = first
-        objects = Dealer.objects.all()[1:]            
+        min = 1000
+        dealer = None
+        objects = Dealer.objects.all()
         for object in objects:
             state = object.state
             city = object.city
@@ -224,3 +218,141 @@ def get_location_by_address(address):
         return app.geocode(address).raw
     except:
         return get_location_by_address(address)
+
+
+def load_colors(request):
+    color_id = request.GET.get('color_id')
+    colors = Color.objects.filter(color_id=color_id).all()
+    return render(request, 'models/color_dropdown_list_options.html', {'colors': colors})
+
+
+def custom(request):
+    template_name = 'models/custom.html'
+    if request.method == 'GET':
+        form = CustomsModelForm()
+        car=get_object_or_404(Car,id=request.session['carid'])
+        context={'form': form,'car':car}
+        return render(request, template_name, context)
+    if 'username' in request.session:
+        if request.method == 'POST':
+            form = CustomsModelForm(request.POST)
+            color = request.POST.get('color')
+            car = get_object_or_404(Car, id=request.session['carid'])
+            dealer = get_object_or_404(Dealer, id=car.dealer_id)
+            buyer = User.objects.get(email=request.session.get('username'))
+            context = {"form": form}
+            info = {}
+            info['car'] = car
+            info['dealer'] = dealer
+            info['buyer'] = buyer
+            info['color'] = color
+
+            if form.is_valid():
+                att = form.save(commit=False)
+                att.car = info['car']
+                att.dealer = info['dealer']
+                att.buyer = info['buyer']
+                att.color = info['color']
+                # form.save()
+                # mailCustomBuyer(request, info)
+                # mailCustomDealer(request, info)
+                messages.info(request, 'Your custom order is booked! Check your gmail for more info')
+                list(messages.get_messages(request))
+                form = DealsModelForm()
+                context = {"form": form}
+                return render(request, template_name, context)
+        return render(request, template_name, context)        
+    return redirect('/login')
+
+def mailCustomBuyer(request, info):
+    if 'username' in request.session:
+        sender = "",
+        password = ""
+        with open("shop/static/credentials.txt", "r") as f:
+            file = f.readlines()
+            sender = file[0].strip()
+            password = file[1].strip()
+        port = 465
+        make = info['car'].make
+        model = info['car'].model
+        variant = info['car'].variant
+        fuel = info['car'].fuel
+        price = info['car'].price
+        name = info['dealer'].name
+        mobile = info['dealer'].mobile
+        state = info['dealer'].state
+        city = info['dealer'].city
+        address = info['dealer'].address
+        email = info['dealer'].email
+        receiver_name = info['buyer'].firstname + ' ' + info['buyer'].lastname
+        receiver = info['buyer'].email
+        color = info['color']
+
+        sent_body = ("Hello, Mr./Ms."+ receiver_name + " Your \n"
+                    "Make: " + str(make) + "\n"
+                    "Model: " + str(model) + "\n"
+                    "Variant: " + str(variant) + "\n"
+                    "Color: " + str(color) + "\n"
+                    "Fuel: " + str(fuel) + "\n"
+                    "Price: "+ str(price) +"\n"+"\n"
+                    "Contact : " + "\n"
+                    "Dealer name: " + str(name) + "\n"
+                    "Mobile: " + str(mobile) + "\n"
+                    "Email: " + str(email) + "\n"
+                    "State: " + str(state) + "\n"
+                    "City: " + str(city) + "\n"
+                    "Address: " + str(address) + "\n"
+                     "\n"
+                     "Team AMG")
+        email_text = """\From: %s
+
+                %s
+                """ % (sender,  sent_body)
+        context = ssl.create_default_context()
+        print("Starting to send to buyer")
+        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+            server.login(sender, password)
+            server.sendmail(sender, receiver, email_text)
+        print("Email sent to buyer!")
+        return
+    return redirect('/login')
+
+def mailCustomDealer(request, info):
+    if 'username' in request.session:
+        sender = "",
+        password = ""
+        with open("shop/static/credentials.txt", "r") as f:
+            file = f.readlines()
+            sender = file[0].strip()
+            password = file[1].strip()
+        port = 465
+        price = info['car'].price
+        name = info['buyer'].firstname + ' ' + info['buyer'].lastname
+        mobile = info['buyer'].mobile
+        state = info['buyer'].state
+        city = info['buyer'].city
+        email = info['buyer'].email
+        receiver_name = info['dealer'].name
+        receiver = info['dealer'].email
+        sent_body = (
+                    "\n" + "\n"
+                    "Custom order Contact : " + "\n"
+                    "Buyer name: " + str(name) + "\n"
+                    "Mobile: " + str(mobile) + "\n"
+                    "Email: " + str(email) + "\n"
+                    "State: " + str(state) + "\n"
+                    "City: " + str(city) + "\n"
+                    "\n"
+                    "Team AMG")
+
+        email_text = """\From: %s
+                %s
+                """ % (sender,  sent_body)
+        context = ssl.create_default_context()
+        print("Starting to send to dealer")
+        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+            server.login(sender, password)
+            server.sendmail(sender, receiver, email_text)
+        print("Email sent to dealer!")
+        return
+    return redirect('/login')

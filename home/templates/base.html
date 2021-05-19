@@ -30,6 +30,9 @@
       {% block menuoldcars %}
       <li> <a href="{% url 'shop:shop-home'%}">Old Cars</a> </li>
       {% endblock menuoldcars %}
+      {% block menucustom %}
+      <li><a href="{% url 'models:custom-order' %}">Custom Order</a></li>
+      {% endblock menucustom %}
       {% if request.session.username %}
       {% block menuyourprofile %}
       <li><a href="{% url 'home:profile' %}">Your Profile</a></li>

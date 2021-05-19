@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    <title>MODEL DETAILS - AMG</title>
+    <title>Custom Order - AMG</title>
 {% endblock title %}
 {% block content %}
 {% if messages %}
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <br>
-                <form action="#">
+                <form align="center">
                     <div class="fields">
                         <div class="field quarter">
                             <label>Type</label>
@@ -95,9 +95,9 @@
                         </div>
 
                         <div class="field quarter">
-                            <label>Color</label>
-                            <input type="text" readonly value="{{car.colors}}">
-                        </div>
+                            <label name="color">Colors</label>
+                            {{form.color}}
+                          </div>
                     </div>
                 </form>
             </div>
@@ -139,9 +139,27 @@
             </div>
         </section>
 </div>
-<form align="center" method="POST">
+<form align="center" method="POST" id="colorfilterForm" data-colors-url="{% url 'models:load_colors' %}">
     {% csrf_token %}
-    <a href="{% url 'models:custom-order' %}" class="button">CUSTOM ORDER</a>
-<button class="primary" style="margin-top: 20px;">BOOK NOW</button>
+    <a href="{% url 'models:models-detail' request.session.carid %}" class="button">Back to original</a>
+<button class="primary" type="submit" style="margin-top: 20px;">BOOK NOW</button>
 </form>
-{% endblock content%}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_color").change(function () {
+        const url = $("#colorfilterForm").attr("data-colors-url");
+        const colorId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'color_id': colorId
+            },
+            success: function (data) {
+                $("#id_color").html(data);
+            }
+        });
+
+    });
+</script>
+{% endblock content %}

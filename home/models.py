@@ -46,7 +46,7 @@ class Dealer(models.Model):
         ordering = ('name',)
 
     def __str__(self):
-        return self.name+' '+str(self.state)+' '+str(self.city)+' '+self.address
+        return self.name+' '+str(self.state)+' '+str(self.city)+' '+self.address+' '+str(self.id) 
 
 class Messages(models.Model):
     name = models.CharField(max_length=40)

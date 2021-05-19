@@ -8,6 +8,7 @@ urlpatterns = [
     path('details/<int:id>/', product_detail, name='product-detail'),
     path('load-models/', load_models, name='load_models'),
     path('load-variants/', load_variants, name='load_variants'),
+
     path('sales/',your_sales,name='shop-sales'),
     path('orders/',your_orders,name='shop-orders'),
 ]
