@@ -181,10 +181,13 @@ def dealer_locate(request):
         return render(request, template_name, context)
     if request.method == 'POST':
         app = Nominatim(user_agent="user")
-        g = geocoder.ip('me')
-        userlat = g.latlng[0]
-        userlon = g.latlng[1]
-        userloc = (userlat,userlon)
+        try:
+            g = geocoder.ip('me')
+            userlat = g.latlng[0]
+            userlon = g.latlng[1]
+            userloc = (userlat, userlon)
+        except NoneType:
+            pass
         min = 1000
         dealer = None
         objects = Dealer.objects.all()

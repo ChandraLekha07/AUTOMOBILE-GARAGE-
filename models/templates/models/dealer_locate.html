@@ -2,13 +2,14 @@
 {% block title %}
     <title>Dealer Locator - AMG</title>
 {% endblock title %}
+{% block menudealerlocate %}
+  <li class="active"> <a href="{% url 'models:dealer-locate'%}">Dealer locator</a> </li>
+{% endblock menudealerlocate %}
 {% block content %}
 {% if location %}
 <h3>Your Location:</h3>
 <p>{{ location.display_name }}</p>
 {% endif %}
-<!--<form method="GET" action="https://maps.locationiq.com/v3/staticmap"></form>-->
-<!--<img src='https://maps.locationiq.com/v3/staticmap?key=pk.36ff70d1b48679ff22c02894258f9d5a&center=0,0&zoom=0&size=900hvx600px&format=roadmap&maptype=roadmap&markers=icon:small-red-cutout|10,10&markers=icon:small-red-cutout|100,500'/>-->
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css' rel='stylesheet' />

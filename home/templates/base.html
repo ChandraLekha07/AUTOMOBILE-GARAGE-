@@ -27,12 +27,15 @@
       {% block menunewcars %}
       <li> <a href="{% url 'models:models-home'%}">New Cars</a> </li>
       {% endblock menunewcars %}
-      {% block menuoldcars %}
-      <li> <a href="{% url 'shop:shop-home'%}">Old Cars</a> </li>
-      {% endblock menuoldcars %}
       {% block menucustom %}
       <li><a href="{% url 'models:custom-order' %}">Custom Order</a></li>
       {% endblock menucustom %}
+      {% block menudealerlocate %}
+      <li> <a href="{% url 'models:dealer-locate'%}">Dealer locator</a> </li>
+      {% endblock menudealerlocate %}
+      {% block menuoldcars %}
+      <li> <a href="{% url 'shop:shop-home'%}">Old Cars</a> </li>
+      {% endblock menuoldcars %}
       {% if request.session.username %}
       {% block menuyourprofile %}
       <li><a href="{% url 'home:profile' %}">Your Profile</a></li>
